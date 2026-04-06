@@ -1,6 +1,4 @@
-Aqui está a versão completa e revisada do seu `README.md`. Este arquivo foi estruturado de forma lógica, consolidando as etapas de extração, o processamento por **NER** e a nova seção de **Análise de Grafos**, incluindo as referências aos arquivos PDF e bases de dados utilizadas.
 
----
 
 # Projeto Unidade 1: Grafos de Co-ocorrência Gastronômica (NLP + ED2)
 
