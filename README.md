@@ -13,10 +13,11 @@ O objetivo central é transformar descrições textuais não estruturadas em uma
 
 ## Organização do Repositório
 Para viabilizar a análise comparativa, os dados estão organizados nas seguintes pastas:
-* `data/camaroes_ponta_negra/`: Contém o PDF original e o arquivo `menu_cm.txt`.
-* `data/coco_bambu/`: Contém o arquivo `menu_cb.txt` extraído da web.
-* `data/processados/`: Armazena os resultados estruturados em JSON (`ner_camaroes.json` e `ner_cocobambu.json`) e as exportações de imagens dos grafos.
-* `notebooks/`: Contém o arquivo `proc_grafos.ipynb` com todo o pipeline de execução.
+* `data/camaroes_ponta_negra/`: Contém o PDF original, o arquivo sujo `menu_cm.txt` e o arquivo limpo camaroes_limpo.txt.
+* `data/coco_bambu/`: Contém o arquivo `menu_cb.txt` extraído da web e o arquivo limpo `cocobambu_limpo.txt`.
+* `data/processados/`: Armazena os resultados estruturados em JSON (`ner_camaroes.json` e `ner_cocobambu.json`) e a matriz de adjacencia.csv
+* `data/imagens/`: tem as exportações de imagens dos grafos gerados.
+* `src/`: Contém o arquivo `proc_grafos.ipynb` com todo o pipeline de execução.
 
 ---
 
