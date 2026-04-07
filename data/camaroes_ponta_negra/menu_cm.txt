@@ -1,6 +1,4 @@
-en
-tra
-das
+entradas
 COUVERT    31
 Cesta com pães aɞesanais e pastas (gorgonzola com frutas vermelhas; 
 cream cheese com pralinè de castanhas; tomate seco com bacon).
@@ -65,11 +63,13 @@ CAMARÃO KIDS EMPANADO    54
 Filé mignon (em cubos) à milanesa, com molho 
 de tomate gratinado com queijo.
 PARMEGIANITO    52
+
 kids
 até 12 anos
 baby
 por Petit Poti
 a paɠir dos 6 meses
+
 Em parceria com Petit Poti, restaurante potiguar 
 especialista em comida para bebês e introdução 
 alimentar, um espaço dedicado aos nossos 
