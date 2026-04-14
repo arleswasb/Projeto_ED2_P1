@@ -36,7 +36,9 @@ Para a disciplina de ED2, a eficiência visual e a densidade do grafo são crít
 
 ### 3. Métrica de Similaridade (Índice de Jaccard)
 Utilizamos o Coeficiente de Jaccard para medir a similaridade entre as vizinhanças dos nós de pratos. Para dois pratos $A$ e $B$, a similaridade é a razão entre o número de ingredientes comuns e o total de ingredientes únicos combinados:
+
 $$J(A,B) = \frac{|N(A) \cap N(B)|}{|N(A) \cup N(B)|}$$
+
 *Onde $N(x)$ representa o conjunto de vizinhos do nó $x$.*
 
 ---
@@ -88,8 +90,8 @@ Os grafos foram exportados via **Pyvis**, permitindo interação física (força
 
 Os slides utilizados para a defesa deste projeto foram desenvolvidos em **LaTeX (Beamer)** e detalham a fundamentação teórica de grafos bipartidos e a métrica de Jaccard aplicada.
 
-* [Visualizar Apresentação (PDF)](Projeto_ED2_P1/docs/apresentação.pdf)
-* [Código-fonte da Apresentação (.tex)](Projeto_ED2_P1/docs/apresentação.tex)
+** [Visualizar Apresentação (PDF)](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/docs/apresentacao.pdf)
+* [Código-fonte da Apresentação (.tex)](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/docs/apresentacao.tex)
 
 ---
 
