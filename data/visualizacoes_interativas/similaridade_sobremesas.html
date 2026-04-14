@@ -1,0 +1,357 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Petit Gateau de Chocolate", "label": "Petit Gateau de Chocolate", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "chocolate", "label": "chocolate", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "baunilha", "label": "baunilha", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Petit Gateau de Doce de Leite", "label": "Petit Gateau de Doce de Leite", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "doce de leite", "label": "doce de leite", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "creme", "label": "creme", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Petit Gateau de Pistache", "label": "Petit Gateau de Pistache", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "pistache", "label": "pistache", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Ta\u00e7a Romeu e Julieta", "label": "Ta\u00e7a Romeu e Julieta", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "queijo", "label": "queijo", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "castanha", "label": "castanha", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Ta\u00e7a Tiramisu", "label": "Ta\u00e7a Tiramisu", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "cacau", "label": "cacau", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Naked de Ninho", "label": "Naked de Ninho", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "leite ninho", "label": "leite ninho", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "castanhas", "label": "castanhas", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Mil Folhas de Doce de Leite", "label": "Mil Folhas de Doce de Leite", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Macaron Petit com Sorvete de Avel\u00e3", "label": "Macaron Petit com Sorvete de Avel\u00e3", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "am\u00eandoas", "label": "am\u00eandoas", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Supreme de Pistache", "label": "Supreme de Pistache", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "chocolate branco", "label": "chocolate branco", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Cocada Maria Bonita", "label": "Cocada Maria Bonita", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "coco", "label": "coco", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "castanha de caju", "label": "castanha de caju", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Cartola Camar\u00f5es", "label": "Cartola Camar\u00f5es", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "banana", "label": "banana", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "canela", "label": "canela", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Creme de Papaya", "label": "Creme de Papaya", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Sorvete de Doce de Leite Marmorizado", "label": "Sorvete de Doce de Leite Marmorizado", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Brownie Vegano", "label": "Brownie Vegano", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Mousse Diet", "label": "Mousse Diet", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) S\u00f3 um Docinho", "label": "S\u00f3 um Docinho", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Pequena Torta De Banana Cremosa", "label": "Pequena Torta De Banana Cremosa", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "sorvete de creme", "label": "sorvete de creme", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Pequena Torta De Lim\u00e3o", "label": "Pequena Torta De Lim\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "lim\u00e3o", "label": "lim\u00e3o", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "leite condensado", "label": "leite condensado", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Pequena Torta Pav\u00ea De Chocolate Trufada", "label": "Pequena Torta Pav\u00ea De Chocolate Trufada", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Blondie de Pistache Individual", "label": "Blondie de Pistache Individual", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Cocada Ao Forno Com Sorvete", "label": "Cocada Ao Forno Com Sorvete", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "coco ralado", "label": "coco ralado", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Cocada Ao Forno", "label": "Cocada Ao Forno", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Pudim De Leite O Melhor Do Mundo", "label": "Pudim De Leite O Melhor Do Mundo", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "a\u00e7\u00facar", "label": "a\u00e7\u00facar", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Brigadeiro De Colher", "label": "Brigadeiro De Colher", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Petit Gateau De Chocolate", "label": "Petit Gateau De Chocolate", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Petit Gateau De Doce De Leite", "label": "Petit Gateau De Doce De Leite", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Churros Com Doce De Leite Argentino", "label": "Churros Com Doce De Leite Argentino", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "doce de leite argentino", "label": "doce de leite argentino", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Mousse De Chocolate", "label": "Mousse De Chocolate", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Cocada Mole com Gelato de Coco", "label": "Cocada Mole com Gelato de Coco", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Abacaxi", "label": "Abacaxi", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Brownie de Chocolate", "label": "Brownie de Chocolate", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Gelato De Creme", "label": "Gelato De Creme", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Gelato de Brigadeiro", "label": "Gelato de Brigadeiro", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Gelato De Cookies And Cream", "label": "Gelato De Cookies And Cream", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Gelato De Doce De Leite", "label": "Gelato De Doce De Leite", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Gelato de queijo com Goiabada", "label": "Gelato de queijo com Goiabada", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Gelato De Pistache", "label": "Gelato De Pistache", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}]);
+                  edges = new vis.DataSet([{"color": "tomato", "from": "(Camar\u00f5es) Petit Gateau de Chocolate", "to": "chocolate", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Petit Gateau de Chocolate", "to": "baunilha", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Camar\u00f5es) Naked de Ninho", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Camar\u00f5es) Macaron Petit com Sorvete de Avel\u00e3", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Camar\u00f5es) Sorvete de Doce de Leite Marmorizado", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Camar\u00f5es) Mousse Diet", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Coco Bambu) Pequena Torta De Lim\u00e3o", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Coco Bambu) Brigadeiro De Colher", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Coco Bambu) Petit Gateau De Chocolate", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Coco Bambu) Mousse De Chocolate", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Coco Bambu) Brownie de Chocolate", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Coco Bambu) Gelato De Creme", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Coco Bambu) Gelato de Brigadeiro", "width": 3}, {"color": "tomato", "from": "chocolate", "to": "(Coco Bambu) Gelato De Cookies And Cream", "width": 3}, {"color": "tomato", "from": "baunilha", "to": "(Camar\u00f5es) Petit Gateau de Pistache", "width": 3}, {"color": "tomato", "from": "baunilha", "to": "(Camar\u00f5es) Naked de Ninho", "width": 3}, {"color": "tomato", "from": "baunilha", "to": "(Camar\u00f5es) Mil Folhas de Doce de Leite", "width": 3}, {"color": "tomato", "from": "baunilha", "to": "(Camar\u00f5es) Cartola Camar\u00f5es", "width": 3}, {"color": "tomato", "from": "baunilha", "to": "(Coco Bambu) Gelato De Cookies And Cream", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Petit Gateau de Doce de Leite", "to": "doce de leite", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Petit Gateau de Doce de Leite", "to": "creme", "width": 3}, {"color": "tomato", "from": "doce de leite", "to": "(Camar\u00f5es) Mil Folhas de Doce de Leite", "width": 3}, {"color": "tomato", "from": "doce de leite", "to": "(Camar\u00f5es) Sorvete de Doce de Leite Marmorizado", "width": 3}, {"color": "tomato", "from": "doce de leite", "to": "(Camar\u00f5es) S\u00f3 um Docinho", "width": 3}, {"color": "tomato", "from": "doce de leite", "to": "(Coco Bambu) Petit Gateau De Doce De Leite", "width": 3}, {"color": "tomato", "from": "creme", "to": "(Coco Bambu) Mousse De Chocolate", "width": 3}, {"color": "tomato", "from": "creme", "to": "(Coco Bambu) Gelato De Creme", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Petit Gateau de Pistache", "to": "pistache", "width": 3}, {"color": "tomato", "from": "pistache", "to": "(Camar\u00f5es) Supreme de Pistache", "width": 3}, {"color": "tomato", "from": "pistache", "to": "(Camar\u00f5es) S\u00f3 um Docinho", "width": 3}, {"color": "tomato", "from": "pistache", "to": "(Coco Bambu) Blondie de Pistache Individual", "width": 3}, {"color": "tomato", "from": "pistache", "to": "(Coco Bambu) Gelato De Pistache", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Ta\u00e7a Romeu e Julieta", "to": "queijo", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Ta\u00e7a Romeu e Julieta", "to": "castanha", "width": 3}, {"color": "tomato", "from": "queijo", "to": "(Camar\u00f5es) Ta\u00e7a Tiramisu", "width": 3}, {"color": "tomato", "from": "queijo", "to": "(Camar\u00f5es) Mousse Diet", "width": 3}, {"color": "tomato", "from": "queijo", "to": "(Coco Bambu) Gelato de queijo com Goiabada", "width": 3}, {"color": "tomato", "from": "castanha", "to": "(Camar\u00f5es) Macaron Petit com Sorvete de Avel\u00e3", "width": 3}, {"color": "tomato", "from": "castanha", "to": "(Camar\u00f5es) Supreme de Pistache", "width": 3}, {"color": "tomato", "from": "castanha", "to": "(Coco Bambu) Gelato De Creme", "width": 3}, {"color": "silver", "from": "(Camar\u00f5es) Ta\u00e7a Tiramisu", "to": "cacau", "width": 1}, {"color": "silver", "from": "cacau", "to": "(Camar\u00f5es) Supreme de Pistache", "width": 1}, {"color": "silver", "from": "cacau", "to": "(Camar\u00f5es) Brownie Vegano", "width": 1}, {"color": "silver", "from": "(Camar\u00f5es) Naked de Ninho", "to": "leite ninho", "width": 1}, {"color": "silver", "from": "(Camar\u00f5es) Naked de Ninho", "to": "castanhas", "width": 1}, {"color": "silver", "from": "leite ninho", "to": "(Camar\u00f5es) Supreme de Pistache", "width": 1}, {"color": "silver", "from": "castanhas", "to": "(Camar\u00f5es) Mousse Diet", "width": 1}, {"color": "silver", "from": "(Camar\u00f5es) Macaron Petit com Sorvete de Avel\u00e3", "to": "am\u00eandoas", "width": 1}, {"color": "silver", "from": "am\u00eandoas", "to": "(Camar\u00f5es) Sorvete de Doce de Leite Marmorizado", "width": 1}, {"color": "tomato", "from": "(Camar\u00f5es) Supreme de Pistache", "to": "chocolate branco", "width": 3}, {"color": "tomato", "from": "chocolate branco", "to": "(Camar\u00f5es) Cartola Camar\u00f5es", "width": 3}, {"color": "tomato", "from": "chocolate branco", "to": "(Coco Bambu) Blondie de Pistache Individual", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Cocada Maria Bonita", "to": "coco", "width": 3}, {"color": "silver", "from": "(Camar\u00f5es) Cocada Maria Bonita", "to": "castanha de caju", "width": 1}, {"color": "tomato", "from": "coco", "to": "(Camar\u00f5es) Brownie Vegano", "width": 3}, {"color": "tomato", "from": "coco", "to": "(Coco Bambu) Cocada Mole com Gelato de Coco", "width": 3}, {"color": "silver", "from": "castanha de caju", "to": "(Camar\u00f5es) Cartola Camar\u00f5es", "width": 1}, {"color": "tomato", "from": "(Camar\u00f5es) Cartola Camar\u00f5es", "to": "banana", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Cartola Camar\u00f5es", "to": "canela", "width": 3}, {"color": "tomato", "from": "banana", "to": "(Coco Bambu) Pequena Torta De Banana Cremosa", "width": 3}, {"color": "tomato", "from": "canela", "to": "(Coco Bambu) Pequena Torta De Banana Cremosa", "width": 3}, {"color": "silver", "from": "(Coco Bambu) Pequena Torta De Banana Cremosa", "to": "sorvete de creme", "width": 1}, {"color": "silver", "from": "sorvete de creme", "to": "(Coco Bambu) Cocada Ao Forno Com Sorvete", "width": 1}, {"color": "silver", "from": "sorvete de creme", "to": "(Coco Bambu) Petit Gateau De Chocolate", "width": 1}, {"color": "silver", "from": "sorvete de creme", "to": "(Coco Bambu) Petit Gateau De Doce De Leite", "width": 1}, {"color": "silver", "from": "sorvete de creme", "to": "(Coco Bambu) Brownie de Chocolate", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Pequena Torta De Lim\u00e3o", "to": "lim\u00e3o", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Pequena Torta De Lim\u00e3o", "to": "leite condensado", "width": 1}, {"color": "silver", "from": "lim\u00e3o", "to": "(Coco Bambu) Abacaxi", "width": 1}, {"color": "silver", "from": "leite condensado", "to": "(Coco Bambu) Cocada Ao Forno Com Sorvete", "width": 1}, {"color": "silver", "from": "leite condensado", "to": "(Coco Bambu) Cocada Ao Forno", "width": 1}, {"color": "silver", "from": "leite condensado", "to": "(Coco Bambu) Brigadeiro De Colher", "width": 1}, {"color": "silver", "from": "leite condensado", "to": "(Coco Bambu) Gelato de Brigadeiro", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Cocada Ao Forno Com Sorvete", "to": "coco ralado", "width": 1}, {"color": "silver", "from": "coco ralado", "to": "(Coco Bambu) Cocada Ao Forno", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Pudim De Leite O Melhor Do Mundo", "to": "a\u00e7\u00facar", "width": 1}, {"color": "silver", "from": "a\u00e7\u00facar", "to": "(Coco Bambu) Mousse De Chocolate", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Churros Com Doce De Leite Argentino", "to": "doce de leite argentino", "width": 1}, {"color": "silver", "from": "doce de leite argentino", "to": "(Coco Bambu) Gelato De Doce De Leite", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 200,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

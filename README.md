@@ -16,8 +16,9 @@ Para viabilizar a análise comparativa, os dados estão organizados nas seguinte
 * `data/camaroes_ponta_negra/`: Contém o PDF original, o arquivo sujo `menu_cm.txt` e o arquivo limpo camaroes_limpo.txt.
 * `data/coco_bambu/`: Contém o arquivo `menu_cb.txt` extraído da web e o arquivo limpo `cocobambu_limpo.txt`.
 * `data/processados/`: Armazena os resultados estruturados em JSON (`ner_camaroes.json` e `ner_cocobambu.json`) e a matriz de adjacencia.csv
-* `data/imagens/`: tem as exportações de imagens dos grafos gerados.
-* `src/`: Contém o arquivo `proc_grafos.ipynb` com todo o pipeline de execução.
+* `data/imagens/`: Tem as exportações de imagens estáticas (PNG) dos grafos gerados.
+* `data/visualizacoes_interativas/`: Contém os mapas interativos em formato HTML (Pyvis).
+* `src/`: Contém o notebook `proc_grafos_gen.ipynb` com todo o pipeline de execução.
 
 ---
 
@@ -28,10 +29,7 @@ A extração de informações categoriza os termos dos cardápios para dar semâ
 | :--- | :--- | :--- |
 | **`PRATO`** | Identificador único do prato para análise de similaridade. | Camarão Internacional, Filé à Parmegiana. |
 | **`ING`** | Ingredientes base da receita (Nós centrais). | Camarão, Carne de Sol, Peixe, Bacalhau. |
-| **`TEC`** | Técnicas de preparo que conectam pratos. | Grelhado, Gratinado, Flambado, Salteado. |
-| **`REG`** | Elementos da culinária regional (Regionalismos). | Queijo Coalho, Nata, Manteiga da Terra. |
 | **`ACOMP`** | Guarnições e acompanhamentos. | Arroz de Leite, Batata Palha, Baião de Dois. |
-| **`SIZE`** | Atributo de nó para perfil de consumo. | Individual, Para Duas Pessoas. |
 
 ---
 
@@ -39,35 +37,45 @@ A extração de informações categoriza os termos dos cardápios para dar semâ
 
 ### 1. Preparação e Coleta
 Conversão de dados não estruturados em formatos processáveis:
-* **Extração de Texto (Camarões)**: Utilização da biblioteca `PyMuPDF` para o parsing do arquivo `Cardapio+Ponta+Negra.pdf`.
-* **Extração Dinâmica (Coco Bambu)**: Captura via console do navegador para lidar com a renderização dinâmica do site.
-* **Limpeza (Regex)**: Aplicação de expressões regulares para remover preços, códigos internos e gramagens.
+* **Parsing de PDF (Camarões):**: Extração de texto bruto do arquivo Cardapio+Ponta+Negra.pdf.
+* **Captura Dinâmica (Coco Bambu):**: Extração de dados via console do navegador para contornar a renderização dinâmica do Live Menu.
+* **Evolução do Pipeline:)**: Aplicação de um pipeline de LLM-based Extraction, permitindo lidar com a variabilidade de descrições literárias dos cardápios.
 
 ### 2. Reconhecimento de Entidades (NER)
-Transformação das descrições literárias em categorias formais utilizando o **spaCy**:
-* **Motor de NER Único**: Aplicação de um `EntityRuler` unificado para ambos os restaurantes, garantindo que ingredientes idênticos gerem o mesmo identificador de nó.
-* **Persistência**: Exportação dos dados estruturados para arquivos **JSON**, garantindo a modularidade entre a fase de NLP e a fase de Grafos.
+Transformação das descrições literárias em categorias formais utilizando 
+* **Extração via IA Generativa:**: Utilização de modelos de linguagem (Gemini) para realizar o Reconhecimento de Entidades Nomeadas (NER) de forma contextual. Isso permitiu separar com precisão o que é Nome do Prato, Descrição Narrativa e a lista atômica de Ingredientes.
+* **Normalização de Dados:**: Garantia de que ingredientes idênticos em ambos os restaurantes (ex: "Nata" vs "Nata Fresca") fossem mapeados para o mesmo identificador de nó, viabilizando o cálculo de similaridade.
+* **Persistência em JSON:**: Os dados foram exportados para arquivos JSON estruturados, servindo como input para a biblioteca NetworkX.
 
 ### 3. Análise de Grafos e Similaridade Gastronômica
-Modelagem dos dados em uma rede complexa para quantificar a semelhança entre as cidades.
-
-
-
-* **Modelagem Bipartida**: O grafo é composto por nós de **Prato** e nós de **Atributo** (Ingredientes/Técnicas).
-* **Índice de Similaridade de Jaccard**: Cálculo matemático para validar a semelhança entre pratos homônimos ou similares, baseado na interseção e união de suas vizinhanças de nós.
-* **Visualização e Subgrafos**: Utilização do layout de mola (`spring_layout`) e extração de subgrafos induzidos (ex: categoria "Camarão") para mitigar a densidade visual e destacar as "pontes" regionais.
-* **Representação Algébrica**: Conversão da rede em uma **Matriz de Adjacência** esparsa para processamento automatizado.
+* **Modelagem de Grafo Bipartido:** Construção de uma rede onde Pratos e Ingredientes são nós distintos, permitindo mapear a composição de cada receita.
+* **Mapeamento de Similaridade (Jaccard):** Aplicação do Índice de Jaccard para comparar pratos homônimos com base na vizinhança de seus ingredientes (Common Neighbors).
+* **Destaques Visuais:** O pipeline destaca automaticamente os "Ingredientes Comuns" (shared hubs) nas visualizações, utilizando arestas coloridas para evidenciar a similaridade transregional entre Camarões e Coco Bambu.
 
 
 
 ---
 
+## Visualização Interativa (Pyvis)
+Além das imagens estáticas, disponibilizamos versões interativas dos grafos para exploração dinâmica (zoom, arraste e detalhes ao passar o mouse).
+
+> [!TIP]
+> Use os links abaixo para visualizar diretamente via GitHub (HTML Preview):
+> * [🗺️ Mapa Interativo: Entradas](https://htmlpreview.github.io/?https://github.com/Arleswasb/ED2_P1/blob/main/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_entradas.html)
+> * [🗺️ Mapa Interativo: Pratos Principais](https://htmlpreview.github.io/?https://github.com/Arleswasb/ED2_P1/blob/main/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_pratos_principais.html)
+> * [🗺️ Mapa Interativo: Saladas](https://htmlpreview.github.io/?https://github.com/Arleswasb/ED2_P1/blob/main/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_saladas.html)
+> * [🗺️ Mapa Interativo: Sobremesas](https://htmlpreview.github.io/?https://github.com/Arleswasb/ED2_P1/blob/main/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_sobremesas.html)
+
+---
+
 ## Guia de Execução: Passo a Passo
 
-1.  **Ambiente**: Ativar o ambiente virtual e instalar as dependências (`pip install networkx spacy pymupdf matplotlib scipy`).
-2.  **Extração e Limpeza**: Executar as células de processamento inicial para gerar os arquivos `.txt` limpos.
-3.  **Processamento NER**: Rodar o motor do spaCy para gerar os arquivos `.json` estruturados.
-4.  **Análise de Grafos**: Executar as células de construção do `NetworkX` para gerar as visualizações e cálculos de similaridade.
+1.  **Ambiente**: Ativar o ambiente virtual e instalar as dependências (`pip install networkx spacy pymupdf matplotlib scipy pyvis`).
+2.  **Processamento NER**: Executar o pipeline de extração via LLM/NER para converter os cardápios em JSON estruturado (armazenados em `data/processados/`).
+3.  **Análise e Exportação**: Rodar o notebook `src/proc_grafos_gen.ipynb`. O pipeline irá realizar automaticamente:
+    *   O cálculo de similaridade entre os menus.
+    *   A exportação de imagens estáticas (PNG) de alta resolução para `data/imagens/`.
+    *   A geração de mapas interativos (HTML) para `data/visualizacoes_interativas/`.
 5. As instruções detalhadas constam no pdf anexo.
 
 ---

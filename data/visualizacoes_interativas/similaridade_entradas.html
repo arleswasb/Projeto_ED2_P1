@@ -1,0 +1,452 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 750px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Couvert", "label": "Couvert", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "tomate seco", "label": "tomate seco", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "bacon", "label": "bacon", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Pastel de Camar\u00e3o", "label": "Pastel de Camar\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "camar\u00e3o", "label": "camar\u00e3o", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "catupiry", "label": "catupiry", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "ervas", "label": "ervas", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Pastel de Carne de Sol", "label": "Pastel de Carne de Sol", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "carne de sol", "label": "carne de sol", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "queijo de coalho", "label": "queijo de coalho", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "cebola roxa", "label": "cebola roxa", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "coentro", "label": "coentro", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Pastel de Queijo Coalho", "label": "Pastel de Queijo Coalho", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "queijo coalho", "label": "queijo coalho", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Bruschetta Potiguar", "label": "Bruschetta Potiguar", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "tapioca", "label": "tapioca", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "pimenta agridoce", "label": "pimenta agridoce", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Casquinho de Caranguejo", "label": "Casquinho de Caranguejo", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "caranguejo", "label": "caranguejo", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "azeite", "label": "azeite", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "tomate", "label": "tomate", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "cebola", "label": "cebola", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "leite de coco", "label": "leite de coco", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "farofa", "label": "farofa", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Caprese de Camar\u00e3o", "label": "Caprese de Camar\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "parmes\u00e3o", "label": "parmes\u00e3o", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "torradas", "label": "torradas", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Ceviche de Peixe e Camar\u00e3o", "label": "Ceviche de Peixe e Camar\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "peixe", "label": "peixe", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "lim\u00e3o", "label": "lim\u00e3o", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "piment\u00f5es", "label": "piment\u00f5es", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "batata doce", "label": "batata doce", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Ceviche de Caju (Vegano)", "label": "Ceviche de Caju (Vegano)", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Batata Trufada", "label": "Batata Trufada", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "batata", "label": "batata", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Escondidinho de Camar\u00e3o", "label": "Escondidinho de Camar\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "manteiga do sert\u00e3o", "label": "manteiga do sert\u00e3o", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "nata fresca", "label": "nata fresca", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "macaxeira", "label": "macaxeira", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Escondidinho de Carne de Sol", "label": "Escondidinho de Carne de Sol", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Camar\u00e3o Ponta Negra", "label": "Camar\u00e3o Ponta Negra", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "molho golf", "label": "molho golf", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Camar\u00e3o 294", "label": "Camar\u00e3o 294", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Camar\u00e3o Estrela do Mar", "label": "Camar\u00e3o Estrela do Mar", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "gergelim", "label": "gergelim", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Polvo Mar e Sert\u00e3o", "label": "Polvo Mar e Sert\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Camar\u00f5es"}, {"color": "lightgray", "font": {"color": "black"}, "id": "polvo", "label": "polvo", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "alcaparras", "label": "alcaparras", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entradinha Camar\u00e3o \u00e0 Milanesa", "label": "Entradinha Camar\u00e3o \u00e0 Milanesa", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "molho t\u00e1rtaro", "label": "molho t\u00e1rtaro", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entradinha Isca de Peixe", "label": "Entradinha Isca de Peixe", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entradinha de Fil\u00e9 aos Quatro Queijos", "label": "Entradinha de Fil\u00e9 aos Quatro Queijos", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "fil\u00e9 mignon", "label": "fil\u00e9 mignon", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "queijo", "label": "queijo", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entradinha Fil\u00e9 com Fritas", "label": "Entradinha Fil\u00e9 com Fritas", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "molho barbecue", "label": "molho barbecue", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entradinha Camar\u00e3o no Alho e \u00d3leo", "label": "Entradinha Camar\u00e3o no Alho e \u00d3leo", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "alho", "label": "alho", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "\u00f3leo", "label": "\u00f3leo", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entradinha Fil\u00e9 ao Molho Madeira", "label": "Entradinha Fil\u00e9 ao Molho Madeira", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "molho madeira", "label": "molho madeira", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "champignon", "label": "champignon", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entradinha Espetinho de Camar\u00e3o", "label": "Entradinha Espetinho de Camar\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entradinha Espetinho de Queijo Coalho", "label": "Entradinha Espetinho de Queijo Coalho", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Empada de Queijo do Reino", "label": "Empada de Queijo do Reino", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "massa de empada", "label": "massa de empada", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Empada de Camar\u00e3o", "label": "Empada de Camar\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entradinha Caldinho de Camar\u00e3o", "label": "Entradinha Caldinho de Camar\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "piment\u00e3o", "label": "piment\u00e3o", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "pimenta de cheiro", "label": "pimenta de cheiro", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "mandioquinha", "label": "mandioquinha", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entradinha Caldinho de Peixe", "label": "Entradinha Caldinho de Peixe", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Couvert Especial", "label": "Couvert Especial", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "salm\u00e3o", "label": "salm\u00e3o", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Ceviche de Salm\u00e3o", "label": "Ceviche de Salm\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Polvo ao Azeite de Tomates Secos", "label": "Polvo ao Azeite de Tomates Secos", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "castanha de caju", "label": "castanha de caju", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "p\u00e3o", "label": "p\u00e3o", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Camar\u00e3o \u00e0 Milanesa", "label": "Camar\u00e3o \u00e0 Milanesa", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Camar\u00e3o no Alho e \u00d3leo", "label": "Camar\u00e3o no Alho e \u00d3leo", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Camar\u00e3o Jangadeiro", "label": "Camar\u00e3o Jangadeiro", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Lula \u00e0 Dor\u00e9", "label": "Lula \u00e0 Dor\u00e9", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Isca de Peixe", "label": "Isca de Peixe", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Batata Frita Especial", "label": "Batata Frita Especial", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "queijo mu\u00e7arela", "label": "queijo mu\u00e7arela", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Dadinhos de Tapioca", "label": "Dadinhos de Tapioca", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Camar\u00e3o no Azeite de Tomate Seco", "label": "Camar\u00e3o no Azeite de Tomate Seco", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Camar\u00e3o Recife", "label": "Camar\u00e3o Recife", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Camar\u00e3o Crocante", "label": "Camar\u00e3o Crocante", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "coco", "label": "coco", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Camar\u00e3o na Manteiga Acebolado", "label": "Camar\u00e3o na Manteiga Acebolado", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Pastel de Carne Mo\u00edda com Azeitona", "label": "Pastel de Carne Mo\u00edda com Azeitona", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Pastel de Carne de Sol", "label": "Pastel de Carne de Sol", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Pastel de Camar\u00e3o", "label": "Pastel de Camar\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "salsinha", "label": "salsinha", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Pastel de Queijo", "label": "Pastel de Queijo", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Pastel de Bacalhau", "label": "Pastel de Bacalhau", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "bacalhau", "label": "bacalhau", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "lightgray", "font": {"color": "black"}, "id": "cheiro-verde", "label": "cheiro-verde", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Escondidinho de Camar\u00e3o", "label": "Escondidinho de Camar\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "lightgray", "font": {"color": "black"}, "id": "nata", "label": "nata", "shape": "dot", "size": 15, "title": "Ingrediente"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Escondidinho de Carne de Sol", "label": "Escondidinho de Carne de Sol", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entrada Carpaccio", "label": "Entrada Carpaccio", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Casquinho de Caranguejo", "label": "Casquinho de Caranguejo", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Croquete de Bacalhau", "label": "Croquete de Bacalhau", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Espetinho de Camar\u00e3o em Crosta", "label": "Espetinho de Camar\u00e3o em Crosta", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Maminha Angus", "label": "Maminha Angus", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Camar\u00f5es ao Forno", "label": "Camar\u00f5es ao Forno", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Caldo de Camar\u00e3o", "label": "Caldo de Camar\u00e3o", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Caldo de Peixe", "label": "Caldo de Peixe", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Fil\u00e9 com Fritas", "label": "Fil\u00e9 com Fritas", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entrada de Fil\u00e9 ao Molho Madeira", "label": "Entrada de Fil\u00e9 ao Molho Madeira", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Entrada de Fil\u00e9 aos Quatro Queijos", "label": "Entrada de Fil\u00e9 aos Quatro Queijos", "shape": "dot", "size": 30, "title": "Restaurante: Coco Bambu"}]);
+                  edges = new vis.DataSet([{"color": "tomato", "from": "(Camar\u00f5es) Couvert", "to": "tomate seco", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Couvert", "to": "bacon", "width": 3}, {"color": "tomato", "from": "tomate seco", "to": "(Coco Bambu) Couvert Especial", "width": 3}, {"color": "tomato", "from": "tomate seco", "to": "(Coco Bambu) Polvo ao Azeite de Tomates Secos", "width": 3}, {"color": "tomato", "from": "tomate seco", "to": "(Coco Bambu) Camar\u00e3o no Azeite de Tomate Seco", "width": 3}, {"color": "tomato", "from": "bacon", "to": "(Coco Bambu) Batata Frita Especial", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Pastel de Camar\u00e3o", "to": "camar\u00e3o", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Pastel de Camar\u00e3o", "to": "catupiry", "width": 3}, {"color": "silver", "from": "(Camar\u00f5es) Pastel de Camar\u00e3o", "to": "ervas", "width": 1}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Camar\u00f5es) Bruschetta Potiguar", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Camar\u00f5es) Caprese de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Camar\u00f5es) Ceviche de Peixe e Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Camar\u00f5es) Escondidinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Camar\u00f5es) Camar\u00e3o Ponta Negra", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Camar\u00f5es) Camar\u00e3o 294", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Camar\u00f5es) Camar\u00e3o Estrela do Mar", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Entradinha Camar\u00e3o \u00e0 Milanesa", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Entradinha Camar\u00e3o no Alho e \u00d3leo", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Entradinha Espetinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Empada de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Entradinha Caldinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Couvert Especial", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Camar\u00e3o \u00e0 Milanesa", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Camar\u00e3o no Alho e \u00d3leo", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Camar\u00e3o Jangadeiro", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Camar\u00e3o no Azeite de Tomate Seco", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Camar\u00e3o Recife", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Camar\u00e3o Crocante", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Camar\u00e3o na Manteiga Acebolado", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Pastel de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Escondidinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Espetinho de Camar\u00e3o em Crosta", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Camar\u00f5es ao Forno", "width": 3}, {"color": "tomato", "from": "camar\u00e3o", "to": "(Coco Bambu) Caldo de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "catupiry", "to": "(Camar\u00f5es) Camar\u00e3o Ponta Negra", "width": 3}, {"color": "tomato", "from": "catupiry", "to": "(Coco Bambu) Camar\u00e3o Jangadeiro", "width": 3}, {"color": "tomato", "from": "catupiry", "to": "(Coco Bambu) Pastel de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "catupiry", "to": "(Coco Bambu) Escondidinho de Camar\u00e3o", "width": 3}, {"color": "silver", "from": "ervas", "to": "(Camar\u00f5es) Camar\u00e3o Ponta Negra", "width": 1}, {"color": "tomato", "from": "(Camar\u00f5es) Pastel de Carne de Sol", "to": "carne de sol", "width": 3}, {"color": "silver", "from": "(Camar\u00f5es) Pastel de Carne de Sol", "to": "queijo de coalho", "width": 1}, {"color": "tomato", "from": "(Camar\u00f5es) Pastel de Carne de Sol", "to": "cebola roxa", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Pastel de Carne de Sol", "to": "coentro", "width": 3}, {"color": "tomato", "from": "carne de sol", "to": "(Camar\u00f5es) Escondidinho de Carne de Sol", "width": 3}, {"color": "tomato", "from": "carne de sol", "to": "(Coco Bambu) Pastel de Carne de Sol", "width": 3}, {"color": "tomato", "from": "carne de sol", "to": "(Coco Bambu) Escondidinho de Carne de Sol", "width": 3}, {"color": "silver", "from": "queijo de coalho", "to": "(Camar\u00f5es) Escondidinho de Camar\u00e3o", "width": 1}, {"color": "silver", "from": "queijo de coalho", "to": "(Camar\u00f5es) Escondidinho de Carne de Sol", "width": 1}, {"color": "tomato", "from": "cebola roxa", "to": "(Camar\u00f5es) Ceviche de Peixe e Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "cebola roxa", "to": "(Camar\u00f5es) Ceviche de Caju (Vegano)", "width": 3}, {"color": "tomato", "from": "cebola roxa", "to": "(Camar\u00f5es) Escondidinho de Carne de Sol", "width": 3}, {"color": "tomato", "from": "cebola roxa", "to": "(Camar\u00f5es) Polvo Mar e Sert\u00e3o", "width": 3}, {"color": "tomato", "from": "cebola roxa", "to": "(Coco Bambu) Entradinha Fil\u00e9 com Fritas", "width": 3}, {"color": "tomato", "from": "cebola roxa", "to": "(Coco Bambu) Pastel de Carne de Sol", "width": 3}, {"color": "tomato", "from": "cebola roxa", "to": "(Coco Bambu) Escondidinho de Carne de Sol", "width": 3}, {"color": "tomato", "from": "cebola roxa", "to": "(Coco Bambu) Fil\u00e9 com Fritas", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Camar\u00f5es) Casquinho de Caranguejo", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Camar\u00f5es) Ceviche de Peixe e Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Camar\u00f5es) Ceviche de Caju (Vegano)", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Camar\u00f5es) Escondidinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Camar\u00f5es) Escondidinho de Carne de Sol", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Camar\u00f5es) Camar\u00e3o 294", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Camar\u00f5es) Polvo Mar e Sert\u00e3o", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Coco Bambu) Entradinha Caldinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Coco Bambu) Entradinha Caldinho de Peixe", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Coco Bambu) Pastel de Carne de Sol", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Coco Bambu) Escondidinho de Carne de Sol", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Coco Bambu) Caldo de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "coentro", "to": "(Coco Bambu) Caldo de Peixe", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Pastel de Queijo Coalho", "to": "queijo coalho", "width": 3}, {"color": "tomato", "from": "queijo coalho", "to": "(Coco Bambu) Entradinha Espetinho de Queijo Coalho", "width": 3}, {"color": "tomato", "from": "queijo coalho", "to": "(Coco Bambu) Pastel de Carne de Sol", "width": 3}, {"color": "tomato", "from": "queijo coalho", "to": "(Coco Bambu) Pastel de Queijo", "width": 3}, {"color": "tomato", "from": "queijo coalho", "to": "(Coco Bambu) Escondidinho de Carne de Sol", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Bruschetta Potiguar", "to": "tapioca", "width": 3}, {"color": "silver", "from": "(Camar\u00f5es) Bruschetta Potiguar", "to": "pimenta agridoce", "width": 1}, {"color": "tomato", "from": "tapioca", "to": "(Coco Bambu) Dadinhos de Tapioca", "width": 3}, {"color": "silver", "from": "pimenta agridoce", "to": "(Camar\u00f5es) Camar\u00e3o Ponta Negra", "width": 1}, {"color": "tomato", "from": "(Camar\u00f5es) Casquinho de Caranguejo", "to": "caranguejo", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Casquinho de Caranguejo", "to": "azeite", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Casquinho de Caranguejo", "to": "tomate", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Casquinho de Caranguejo", "to": "cebola", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Casquinho de Caranguejo", "to": "leite de coco", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Casquinho de Caranguejo", "to": "farofa", "width": 3}, {"color": "tomato", "from": "caranguejo", "to": "(Coco Bambu) Casquinho de Caranguejo", "width": 3}, {"color": "tomato", "from": "azeite", "to": "(Camar\u00f5es) Ceviche de Peixe e Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "azeite", "to": "(Camar\u00f5es) Ceviche de Caju (Vegano)", "width": 3}, {"color": "tomato", "from": "azeite", "to": "(Coco Bambu) Polvo ao Azeite de Tomates Secos", "width": 3}, {"color": "tomato", "from": "azeite", "to": "(Coco Bambu) Camar\u00e3o no Azeite de Tomate Seco", "width": 3}, {"color": "tomato", "from": "tomate", "to": "(Camar\u00f5es) Escondidinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "tomate", "to": "(Camar\u00f5es) Polvo Mar e Sert\u00e3o", "width": 3}, {"color": "tomato", "from": "tomate", "to": "(Coco Bambu) Couvert Especial", "width": 3}, {"color": "tomato", "from": "tomate", "to": "(Coco Bambu) Casquinho de Caranguejo", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Entradinha Caldinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Entradinha Caldinho de Peixe", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Ceviche de Salm\u00e3o", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Polvo ao Azeite de Tomates Secos", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Camar\u00e3o no Azeite de Tomate Seco", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Camar\u00e3o Recife", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Camar\u00e3o na Manteiga Acebolado", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Pastel de Bacalhau", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Escondidinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Caldo de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "cebola", "to": "(Coco Bambu) Caldo de Peixe", "width": 3}, {"color": "tomato", "from": "leite de coco", "to": "(Camar\u00f5es) Ceviche de Caju (Vegano)", "width": 3}, {"color": "tomato", "from": "leite de coco", "to": "(Coco Bambu) Entradinha Caldinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "leite de coco", "to": "(Coco Bambu) Entradinha Caldinho de Peixe", "width": 3}, {"color": "tomato", "from": "leite de coco", "to": "(Coco Bambu) Casquinho de Caranguejo", "width": 3}, {"color": "tomato", "from": "leite de coco", "to": "(Coco Bambu) Caldo de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "leite de coco", "to": "(Coco Bambu) Caldo de Peixe", "width": 3}, {"color": "tomato", "from": "farofa", "to": "(Coco Bambu) Casquinho de Caranguejo", "width": 3}, {"color": "tomato", "from": "farofa", "to": "(Coco Bambu) Maminha Angus", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Caprese de Camar\u00e3o", "to": "parmes\u00e3o", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Caprese de Camar\u00e3o", "to": "torradas", "width": 3}, {"color": "tomato", "from": "parmes\u00e3o", "to": "(Camar\u00f5es) Batata Trufada", "width": 3}, {"color": "tomato", "from": "parmes\u00e3o", "to": "(Coco Bambu) Polvo ao Azeite de Tomates Secos", "width": 3}, {"color": "tomato", "from": "parmes\u00e3o", "to": "(Coco Bambu) Camar\u00e3o no Azeite de Tomate Seco", "width": 3}, {"color": "tomato", "from": "parmes\u00e3o", "to": "(Coco Bambu) Escondidinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "parmes\u00e3o", "to": "(Coco Bambu) Entrada Carpaccio", "width": 3}, {"color": "tomato", "from": "torradas", "to": "(Camar\u00f5es) Camar\u00e3o 294", "width": 3}, {"color": "tomato", "from": "torradas", "to": "(Camar\u00f5es) Polvo Mar e Sert\u00e3o", "width": 3}, {"color": "tomato", "from": "torradas", "to": "(Coco Bambu) Entradinha de Fil\u00e9 aos Quatro Queijos", "width": 3}, {"color": "tomato", "from": "torradas", "to": "(Coco Bambu) Couvert Especial", "width": 3}, {"color": "tomato", "from": "torradas", "to": "(Coco Bambu) Ceviche de Salm\u00e3o", "width": 3}, {"color": "tomato", "from": "torradas", "to": "(Coco Bambu) Entrada de Fil\u00e9 ao Molho Madeira", "width": 3}, {"color": "tomato", "from": "torradas", "to": "(Coco Bambu) Entrada de Fil\u00e9 aos Quatro Queijos", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Ceviche de Peixe e Camar\u00e3o", "to": "peixe", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Ceviche de Peixe e Camar\u00e3o", "to": "lim\u00e3o", "width": 3}, {"color": "silver", "from": "(Camar\u00f5es) Ceviche de Peixe e Camar\u00e3o", "to": "piment\u00f5es", "width": 1}, {"color": "silver", "from": "(Camar\u00f5es) Ceviche de Peixe e Camar\u00e3o", "to": "batata doce", "width": 1}, {"color": "tomato", "from": "peixe", "to": "(Coco Bambu) Entradinha Isca de Peixe", "width": 3}, {"color": "tomato", "from": "peixe", "to": "(Coco Bambu) Entradinha Caldinho de Peixe", "width": 3}, {"color": "tomato", "from": "peixe", "to": "(Coco Bambu) Isca de Peixe", "width": 3}, {"color": "tomato", "from": "peixe", "to": "(Coco Bambu) Caldo de Peixe", "width": 3}, {"color": "tomato", "from": "lim\u00e3o", "to": "(Camar\u00f5es) Ceviche de Caju (Vegano)", "width": 3}, {"color": "tomato", "from": "lim\u00e3o", "to": "(Coco Bambu) Ceviche de Salm\u00e3o", "width": 3}, {"color": "silver", "from": "piment\u00f5es", "to": "(Camar\u00f5es) Ceviche de Caju (Vegano)", "width": 1}, {"color": "silver", "from": "batata doce", "to": "(Camar\u00f5es) Ceviche de Caju (Vegano)", "width": 1}, {"color": "tomato", "from": "(Camar\u00f5es) Batata Trufada", "to": "batata", "width": 3}, {"color": "tomato", "from": "batata", "to": "(Coco Bambu) Entradinha Fil\u00e9 com Fritas", "width": 3}, {"color": "tomato", "from": "batata", "to": "(Coco Bambu) Batata Frita Especial", "width": 3}, {"color": "tomato", "from": "batata", "to": "(Coco Bambu) Fil\u00e9 com Fritas", "width": 3}, {"color": "silver", "from": "(Camar\u00f5es) Escondidinho de Camar\u00e3o", "to": "manteiga do sert\u00e3o", "width": 1}, {"color": "silver", "from": "(Camar\u00f5es) Escondidinho de Camar\u00e3o", "to": "nata fresca", "width": 1}, {"color": "tomato", "from": "(Camar\u00f5es) Escondidinho de Camar\u00e3o", "to": "macaxeira", "width": 3}, {"color": "silver", "from": "manteiga do sert\u00e3o", "to": "(Camar\u00f5es) Escondidinho de Carne de Sol", "width": 1}, {"color": "silver", "from": "manteiga do sert\u00e3o", "to": "(Camar\u00f5es) Camar\u00e3o 294", "width": 1}, {"color": "silver", "from": "manteiga do sert\u00e3o", "to": "(Camar\u00f5es) Polvo Mar e Sert\u00e3o", "width": 1}, {"color": "silver", "from": "nata fresca", "to": "(Camar\u00f5es) Escondidinho de Carne de Sol", "width": 1}, {"color": "silver", "from": "nata fresca", "to": "(Camar\u00f5es) Camar\u00e3o 294", "width": 1}, {"color": "silver", "from": "nata fresca", "to": "(Camar\u00f5es) Polvo Mar e Sert\u00e3o", "width": 1}, {"color": "tomato", "from": "macaxeira", "to": "(Camar\u00f5es) Escondidinho de Carne de Sol", "width": 3}, {"color": "tomato", "from": "macaxeira", "to": "(Coco Bambu) Camar\u00e3o na Manteiga Acebolado", "width": 3}, {"color": "tomato", "from": "macaxeira", "to": "(Coco Bambu) Escondidinho de Camar\u00e3o", "width": 3}, {"color": "tomato", "from": "macaxeira", "to": "(Coco Bambu) Escondidinho de Carne de Sol", "width": 3}, {"color": "silver", "from": "(Camar\u00f5es) Camar\u00e3o Ponta Negra", "to": "molho golf", "width": 1}, {"color": "silver", "from": "molho golf", "to": "(Camar\u00f5es) Camar\u00e3o Estrela do Mar", "width": 1}, {"color": "tomato", "from": "(Camar\u00f5es) Camar\u00e3o Estrela do Mar", "to": "gergelim", "width": 3}, {"color": "tomato", "from": "gergelim", "to": "(Coco Bambu) Entradinha Camar\u00e3o \u00e0 Milanesa", "width": 3}, {"color": "tomato", "from": "gergelim", "to": "(Coco Bambu) Entradinha Isca de Peixe", "width": 3}, {"color": "tomato", "from": "gergelim", "to": "(Coco Bambu) Camar\u00e3o \u00e0 Milanesa", "width": 3}, {"color": "tomato", "from": "gergelim", "to": "(Coco Bambu) Isca de Peixe", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Polvo Mar e Sert\u00e3o", "to": "polvo", "width": 3}, {"color": "tomato", "from": "(Camar\u00f5es) Polvo Mar e Sert\u00e3o", "to": "alcaparras", "width": 3}, {"color": "tomato", "from": "polvo", "to": "(Coco Bambu) Polvo ao Azeite de Tomates Secos", "width": 3}, {"color": "tomato", "from": "alcaparras", "to": "(Coco Bambu) Entrada Carpaccio", "width": 3}, {"color": "silver", "from": "(Coco Bambu) Entradinha Camar\u00e3o \u00e0 Milanesa", "to": "molho t\u00e1rtaro", "width": 1}, {"color": "silver", "from": "molho t\u00e1rtaro", "to": "(Coco Bambu) Entradinha Isca de Peixe", "width": 1}, {"color": "silver", "from": "molho t\u00e1rtaro", "to": "(Coco Bambu) Camar\u00e3o \u00e0 Milanesa", "width": 1}, {"color": "silver", "from": "molho t\u00e1rtaro", "to": "(Coco Bambu) Lula \u00e0 Dor\u00e9", "width": 1}, {"color": "silver", "from": "molho t\u00e1rtaro", "to": "(Coco Bambu) Isca de Peixe", "width": 1}, {"color": "silver", "from": "molho t\u00e1rtaro", "to": "(Coco Bambu) Croquete de Bacalhau", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Entradinha de Fil\u00e9 aos Quatro Queijos", "to": "fil\u00e9 mignon", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Entradinha de Fil\u00e9 aos Quatro Queijos", "to": "queijo", "width": 1}, {"color": "silver", "from": "fil\u00e9 mignon", "to": "(Coco Bambu) Entradinha Fil\u00e9 com Fritas", "width": 1}, {"color": "silver", "from": "fil\u00e9 mignon", "to": "(Coco Bambu) Entradinha Fil\u00e9 ao Molho Madeira", "width": 1}, {"color": "silver", "from": "fil\u00e9 mignon", "to": "(Coco Bambu) Fil\u00e9 com Fritas", "width": 1}, {"color": "silver", "from": "fil\u00e9 mignon", "to": "(Coco Bambu) Entrada de Fil\u00e9 ao Molho Madeira", "width": 1}, {"color": "silver", "from": "fil\u00e9 mignon", "to": "(Coco Bambu) Entrada de Fil\u00e9 aos Quatro Queijos", "width": 1}, {"color": "silver", "from": "queijo", "to": "(Coco Bambu) Entrada de Fil\u00e9 aos Quatro Queijos", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Entradinha Fil\u00e9 com Fritas", "to": "molho barbecue", "width": 1}, {"color": "silver", "from": "molho barbecue", "to": "(Coco Bambu) Fil\u00e9 com Fritas", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Entradinha Camar\u00e3o no Alho e \u00d3leo", "to": "alho", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Entradinha Camar\u00e3o no Alho e \u00d3leo", "to": "\u00f3leo", "width": 1}, {"color": "silver", "from": "alho", "to": "(Coco Bambu) Entradinha Caldinho de Camar\u00e3o", "width": 1}, {"color": "silver", "from": "alho", "to": "(Coco Bambu) Entradinha Caldinho de Peixe", "width": 1}, {"color": "silver", "from": "alho", "to": "(Coco Bambu) Polvo ao Azeite de Tomates Secos", "width": 1}, {"color": "silver", "from": "alho", "to": "(Coco Bambu) Camar\u00e3o no Alho e \u00d3leo", "width": 1}, {"color": "silver", "from": "alho", "to": "(Coco Bambu) Camar\u00e3o no Azeite de Tomate Seco", "width": 1}, {"color": "silver", "from": "alho", "to": "(Coco Bambu) Camar\u00e3o Recife", "width": 1}, {"color": "silver", "from": "alho", "to": "(Coco Bambu) Caldo de Camar\u00e3o", "width": 1}, {"color": "silver", "from": "alho", "to": "(Coco Bambu) Caldo de Peixe", "width": 1}, {"color": "silver", "from": "\u00f3leo", "to": "(Coco Bambu) Camar\u00e3o no Alho e \u00d3leo", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Entradinha Fil\u00e9 ao Molho Madeira", "to": "molho madeira", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Entradinha Fil\u00e9 ao Molho Madeira", "to": "champignon", "width": 1}, {"color": "silver", "from": "molho madeira", "to": "(Coco Bambu) Entrada de Fil\u00e9 ao Molho Madeira", "width": 1}, {"color": "silver", "from": "champignon", "to": "(Coco Bambu) Entrada de Fil\u00e9 ao Molho Madeira", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Empada de Queijo do Reino", "to": "massa de empada", "width": 1}, {"color": "silver", "from": "massa de empada", "to": "(Coco Bambu) Empada de Camar\u00e3o", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Entradinha Caldinho de Camar\u00e3o", "to": "piment\u00e3o", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Entradinha Caldinho de Camar\u00e3o", "to": "pimenta de cheiro", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Entradinha Caldinho de Camar\u00e3o", "to": "mandioquinha", "width": 1}, {"color": "silver", "from": "piment\u00e3o", "to": "(Coco Bambu) Entradinha Caldinho de Peixe", "width": 1}, {"color": "silver", "from": "piment\u00e3o", "to": "(Coco Bambu) Pastel de Bacalhau", "width": 1}, {"color": "silver", "from": "piment\u00e3o", "to": "(Coco Bambu) Caldo de Camar\u00e3o", "width": 1}, {"color": "silver", "from": "piment\u00e3o", "to": "(Coco Bambu) Caldo de Peixe", "width": 1}, {"color": "silver", "from": "pimenta de cheiro", "to": "(Coco Bambu) Entradinha Caldinho de Peixe", "width": 1}, {"color": "silver", "from": "pimenta de cheiro", "to": "(Coco Bambu) Caldo de Camar\u00e3o", "width": 1}, {"color": "silver", "from": "pimenta de cheiro", "to": "(Coco Bambu) Caldo de Peixe", "width": 1}, {"color": "silver", "from": "mandioquinha", "to": "(Coco Bambu) Caldo de Camar\u00e3o", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Couvert Especial", "to": "salm\u00e3o", "width": 1}, {"color": "silver", "from": "salm\u00e3o", "to": "(Coco Bambu) Ceviche de Salm\u00e3o", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Polvo ao Azeite de Tomates Secos", "to": "castanha de caju", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Polvo ao Azeite de Tomates Secos", "to": "p\u00e3o", "width": 1}, {"color": "silver", "from": "castanha de caju", "to": "(Coco Bambu) Camar\u00e3o no Azeite de Tomate Seco", "width": 1}, {"color": "silver", "from": "p\u00e3o", "to": "(Coco Bambu) Camar\u00e3o no Azeite de Tomate Seco", "width": 1}, {"color": "silver", "from": "p\u00e3o", "to": "(Coco Bambu) Entrada Carpaccio", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Batata Frita Especial", "to": "queijo mu\u00e7arela", "width": 1}, {"color": "silver", "from": "queijo mu\u00e7arela", "to": "(Coco Bambu) Pastel de Queijo", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Camar\u00e3o Crocante", "to": "coco", "width": 1}, {"color": "silver", "from": "coco", "to": "(Coco Bambu) Casquinho de Caranguejo", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Pastel de Camar\u00e3o", "to": "salsinha", "width": 1}, {"color": "silver", "from": "salsinha", "to": "(Coco Bambu) Escondidinho de Camar\u00e3o", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Pastel de Bacalhau", "to": "bacalhau", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Pastel de Bacalhau", "to": "cheiro-verde", "width": 1}, {"color": "silver", "from": "bacalhau", "to": "(Coco Bambu) Croquete de Bacalhau", "width": 1}, {"color": "silver", "from": "cheiro-verde", "to": "(Coco Bambu) Casquinho de Caranguejo", "width": 1}, {"color": "silver", "from": "(Coco Bambu) Escondidinho de Camar\u00e3o", "to": "nata", "width": 1}, {"color": "silver", "from": "nata", "to": "(Coco Bambu) Escondidinho de Carne de Sol", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 200,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

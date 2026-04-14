@@ -1,1776 +1,1128 @@
-[
-    {
-        "prato": "COUVERT    31",
-        "tags": []
-    },
-    {
-        "prato": "cream cheese com pralinè de castanhas; tomate seco com bacon).",
-        "tags": [
-            "pastel de",
-            "camarão"
+{
+    "restaurante": "Camarões",
+    "cardapio_completo": {
+        "entradas_e_petiscos": [
+            {
+                "nome": "Couvert",
+                "descricao": "Cesta com pães artesanais e pastas (gorgonzola com frutas vermelhas; cream cheese com praliné de castanhas, tomate seco com bacon)",
+                "ingredientes": [
+                    "pães artesanais",
+                    "gorgonzola",
+                    "frutas vermelhas",
+                    "cream cheese",
+                    "castanhas",
+                    "tomate seco",
+                    "bacon"
+                ]
+            },
+            {
+                "nome": "Pastel de Camarão",
+                "descricao": "Camarão, catupiry e ervas",
+                "ingredientes": [
+                    "camarão",
+                    "catupiry",
+                    "ervas"
+                ]
+            },
+            {
+                "nome": "Pastel de Carne de Sol",
+                "descricao": "Carne de sol, queijo de coalho, cebola roxa e coentro",
+                "ingredientes": [
+                    "carne de sol",
+                    "queijo de coalho",
+                    "cebola roxa",
+                    "coentro"
+                ]
+            },
+            {
+                "nome": "Pastel de Queijo Coalho",
+                "descricao": "Queijo coalho",
+                "ingredientes": [
+                    "queijo coalho"
+                ]
+            },
+            {
+                "nome": "Bruschetta Potiguar",
+                "descricao": "Dadinhos de tapioca coroados com creme formaggio, camarão grelhado, toque de pimenta agridoce e fio de mel de engenho",
+                "ingredientes": [
+                    "tapioca",
+                    "creme formaggio",
+                    "camarão",
+                    "pimenta agridoce",
+                    "mel de engenho"
+                ]
+            },
+            {
+                "nome": "Casquinho de Caranguejo",
+                "descricao": "Carne de caranguejo refogada com azeite, tomate, cebola, coentro e leite de coco. Coberta com farofa",
+                "ingredientes": [
+                    "caranguejo",
+                    "azeite",
+                    "tomate",
+                    "cebola",
+                    "coentro",
+                    "leite de coco",
+                    "farofa"
+                ]
+            },
+            {
+                "nome": "Caprese de Camarão",
+                "descricao": "Camarão ao pesto coberto com molho de tomate fresco e espuma de parmesão. Acompanha torradas",
+                "ingredientes": [
+                    "camarão",
+                    "pesto",
+                    "molho de tomate",
+                    "parmesão",
+                    "torradas"
+                ]
+            },
+            {
+                "nome": "Ceviche de Peixe e Camarão",
+                "descricao": "Camarão e peixe marinados com azeite, suco de limão, cebola roxa, pimentões e coentro. Acompanha chips de batata doce",
+                "ingredientes": [
+                    "camarão",
+                    "peixe",
+                    "azeite",
+                    "limão",
+                    "cebola roxa",
+                    "pimentões",
+                    "coentro",
+                    "batata doce"
+                ]
+            },
+            {
+                "nome": "Ceviche de Caju (Vegano)",
+                "descricao": "Caju marinado com azeite, suco de limão, leite de coco, castanha, cebola roxa, pimentões, tomate cereja e coentro. Acompanha chips de batata doce",
+                "ingredientes": [
+                    "caju",
+                    "azeite",
+                    "limão",
+                    "leite de coco",
+                    "castanha",
+                    "cebola roxa",
+                    "pimentões",
+                    "tomate cereja",
+                    "coentro",
+                    "batata doce"
+                ]
+            },
+            {
+                "nome": "Batata Trufada",
+                "descricao": "Batata frita fininha temperada com sal, parmesão e azeite trufado. Acompanha maionese caseira",
+                "ingredientes": [
+                    "batata",
+                    "parmesão",
+                    "azeite trufado",
+                    "maionese"
+                ]
+            },
+            {
+                "nome": "Escondidinho de Camarão",
+                "descricao": "Camarão refogado na manteiga do sertão com tomate, nata fresca e coentro. Coberto com purê de macaxeira e gratinado com queijo de coalho",
+                "ingredientes": [
+                    "camarão",
+                    "manteiga do sertão",
+                    "tomate",
+                    "nata fresca",
+                    "coentro",
+                    "macaxeira",
+                    "queijo de coalho"
+                ]
+            },
+            {
+                "nome": "Escondidinho de Carne de Sol",
+                "descricao": "Carne de sol desfiada e refogada na manteiga do sertão com cebola roxa, nata fresca e coentro. Coberta com purê de macaxeira e gratinada com queijo de coalho",
+                "ingredientes": [
+                    "carne de sol",
+                    "manteiga do sertão",
+                    "cebola roxa",
+                    "nata fresca",
+                    "coentro",
+                    "macaxeira",
+                    "queijo de coalho"
+                ]
+            },
+            {
+                "nome": "Camarão Ponta Negra",
+                "descricao": "Camarão empanado recheado com catupiry e ervas. Acompanha molho golf e geleia de pimenta agridoce",
+                "ingredientes": [
+                    "camarão",
+                    "catupiry",
+                    "ervas",
+                    "molho golf",
+                    "pimenta agridoce"
+                ]
+            },
+            {
+                "nome": "Camarão 294",
+                "descricao": "Camarão salteado na manteiga do sertão, finalizado com nata fresca e coentro. Acompanha torradas",
+                "ingredientes": [
+                    "camarão",
+                    "manteiga do sertão",
+                    "nata fresca",
+                    "coentro",
+                    "torradas"
+                ]
+            },
+            {
+                "nome": "Camarão Estrela do Mar",
+                "descricao": "Camarão empanado com gergelim, servido com molhos golf e aioli com páprica",
+                "ingredientes": [
+                    "camarão",
+                    "gergelim",
+                    "molho golf",
+                    "aioli",
+                    "páprica"
+                ]
+            },
+            {
+                "nome": "Polvo Mar e Sertão",
+                "descricao": "Tentáculos de polvo salteados na manteiga do sertão com cebola roxa, tomate, alcaparras, nata fresca e coentro. Acompanha torradas",
+                "ingredientes": [
+                    "polvo",
+                    "manteiga do sertão",
+                    "cebola roxa",
+                    "tomate",
+                    "alcaparras",
+                    "nata fresca",
+                    "coentro",
+                    "torradas"
+                ]
+            }
+        ],
+        "pratos_principais": [
+            {
+                "nome": "Camarão à Grega",
+                "descricao": "Camarão à milanesa, arroz à grega (ervilha, cenoura, presunto e uva passa), molho de tomate, queijo mozarela e batata palha",
+                "ingredientes": [
+                    "camarão",
+                    "arroz",
+                    "ervilha",
+                    "cenoura",
+                    "presunto",
+                    "uva passa",
+                    "molho de tomate",
+                    "queijo mozarela",
+                    "batata palha"
+                ]
+            },
+            {
+                "nome": "Camarão Internacional",
+                "descricao": "Camarão salteado com molho branco, arroz cremoso com ervilha e presunto, queijos mozarela e parmesão e batata palha",
+                "ingredientes": [
+                    "camarão",
+                    "molho branco",
+                    "arroz",
+                    "ervilha",
+                    "presunto",
+                    "queijo mozarela",
+                    "queijo parmesão",
+                    "batata palha"
+                ]
+            },
+            {
+                "nome": "Camarão do Chef",
+                "descricao": "Camarão à milanesa, arroz cremoso de manjericão, molho de tomate, azeitona preta, orégano, queijo mozarela e batata palha",
+                "ingredientes": [
+                    "camarão",
+                    "arroz",
+                    "manjericão",
+                    "molho de tomate",
+                    "azeitona preta",
+                    "orégano",
+                    "queijo mozarela",
+                    "batata palha"
+                ]
+            },
+            {
+                "nome": "Camarão Seridó",
+                "descricao": "Camarão refogado na manteiga do sertão com verduras, nata fresca e coentro. Servido sobre arroz cremoso da terra e gratinado com queijo de coalho. Acompanha macaxeira frita",
+                "ingredientes": [
+                    "camarão",
+                    "manteiga do sertão",
+                    "verduras",
+                    "nata fresca",
+                    "coentro",
+                    "arroz",
+                    "queijo de coalho",
+                    "macaxeira"
+                ]
+            },
+            {
+                "nome": "Camarão Dijon",
+                "descricao": "Camarão com vinho branco, molho branco, palmito, mostarda Dijon, arroz cremoso com legumes e ervilha, queijos mozarela e parmesão e batata palha",
+                "ingredientes": [
+                    "camarão",
+                    "vinho branco",
+                    "molho branco",
+                    "palmito",
+                    "mostarda dijon",
+                    "arroz",
+                    "legumes",
+                    "ervilha",
+                    "queijo mozarela",
+                    "queijo parmesão",
+                    "batata palha"
+                ]
+            },
+            {
+                "nome": "Camarão Gratin",
+                "descricao": "Camarão com molho branco, vinho branco, cebola roxa, tomate cereja, arroz cremoso com alho-poró e tomate seco, queijos catupiry e parmesão e batata frita com páprica",
+                "ingredientes": [
+                    "camarão",
+                    "molho branco",
+                    "vinho branco",
+                    "cebola roxa",
+                    "tomate cereja",
+                    "arroz",
+                    "alho-poró",
+                    "tomate seco",
+                    "catupiry",
+                    "parmesão",
+                    "batata",
+                    "páprica"
+                ]
+            },
+            {
+                "nome": "Camarão Canto do Mangue",
+                "descricao": "Camarão na manteiga do sertão, molho de camarão, tomate, cebola roxa, coentro, arroz de caranguejo, queijo de coalho e macaxeira frita",
+                "ingredientes": [
+                    "camarão",
+                    "manteiga do sertão",
+                    "tomate",
+                    "cebola roxa",
+                    "coentro",
+                    "arroz",
+                    "caranguejo",
+                    "queijo de coalho",
+                    "macaxeira"
+                ]
+            },
+            {
+                "nome": "Filé à Parmegiana",
+                "descricao": "Escalopes de filé mignon à milanesa, fettuccine ao molho de tomate e queijos mozarela e parmesão",
+                "ingredientes": [
+                    "filé mignon",
+                    "fettuccine",
+                    "molho de tomate",
+                    "queijo mozarela",
+                    "queijo parmesão"
+                ]
+            },
+            {
+                "nome": "Camarão Imperial",
+                "descricao": "Camarão empanado com catupiry, arroz cremoso com parmesão, vinho branco, bacon, legumes e geleia de pimenta",
+                "ingredientes": [
+                    "camarão",
+                    "catupiry",
+                    "arroz",
+                    "parmesão",
+                    "vinho branco",
+                    "bacon",
+                    "legumes",
+                    "pimenta"
+                ]
+            },
+            {
+                "nome": "Camarão Dom Alfredo",
+                "descricao": "Camarão grelhado, fettuccine ao molho cremoso com parmesão, vinho branco, bacon, legumes e farofa de pão",
+                "ingredientes": [
+                    "camarão",
+                    "fettuccine",
+                    "parmesão",
+                    "vinho branco",
+                    "bacon",
+                    "legumes",
+                    "pão"
+                ]
+            },
+            {
+                "nome": "Camarão Bonfim",
+                "descricao": "Camarão na manteiga do sertão com cebola roxa, tomate, castanha de caju, pimenta biquinho, queijo de coalho, coentro, risoto de vatapá e azeite de dendê",
+                "ingredientes": [
+                    "camarão",
+                    "manteiga do sertão",
+                    "cebola roxa",
+                    "tomate",
+                    "castanha de caju",
+                    "pimenta biquinho",
+                    "queijo de coalho",
+                    "coentro",
+                    "arroz",
+                    "vatapá",
+                    "azeite de dendê"
+                ]
+            },
+            {
+                "nome": "Camarão Flor de Sal",
+                "descricao": "Camarão grelhado, azeite de ervas, tomate cereja, mozarela de búfala, flor de sal, arroz com amêndoas, legumes e batata formaggio com bacon",
+                "ingredientes": [
+                    "camarão",
+                    "azeite",
+                    "tomate cereja",
+                    "mozarela de búfala",
+                    "flor de sal",
+                    "arroz",
+                    "amêndoas",
+                    "legumes",
+                    "batata",
+                    "bacon"
+                ]
+            },
+            {
+                "nome": "Camarão Cidade do Sol",
+                "descricao": "Camarão empanado com panko e parmesão, risoto de provolone com azeite trufado, alho-poró e geleia de damasco",
+                "ingredientes": [
+                    "camarão",
+                    "panko",
+                    "parmesão",
+                    "arroz",
+                    "provolone",
+                    "azeite trufado",
+                    "alho-poró",
+                    "damasco"
+                ]
+            },
+            {
+                "nome": "Camarão All'Amatriciana",
+                "descricao": "Camarão com tomate seco, azeitona preta, farofa de ervas, parmesão e risoto de tomate com bacon e manjericão",
+                "ingredientes": [
+                    "camarão",
+                    "tomate seco",
+                    "azeitona preta",
+                    "parmesão",
+                    "arroz",
+                    "tomate",
+                    "bacon",
+                    "manjericão"
+                ]
+            },
+            {
+                "nome": "Camarão Teriyaki",
+                "descricao": "Camarão com molho teriyaki, abacaxi, castanha de caju, gergelim, arroz com castanhas, legumes e batata formaggio",
+                "ingredientes": [
+                    "camarão",
+                    "teriyaki",
+                    "abacaxi",
+                    "castanha de caju",
+                    "gergelim",
+                    "arroz",
+                    "legumes",
+                    "batata"
+                ]
+            },
+            {
+                "nome": "Camarão no Jerimum",
+                "descricao": "Jerimum recheado com camarões, queijo de coalho, coco, verduras e coentro. Macaxeira frita e arroz com brócolis",
+                "ingredientes": [
+                    "jerimum",
+                    "camarão",
+                    "queijo de coalho",
+                    "coco",
+                    "verduras",
+                    "coentro",
+                    "macaxeira",
+                    "arroz",
+                    "brócolis"
+                ]
+            },
+            {
+                "nome": "Risoni de Camarão e Cogumelos",
+                "descricao": "Camarão com cebola roxa, alho-poró, cogumelos, limão siciliano, risoni e parmesão",
+                "ingredientes": [
+                    "camarão",
+                    "cebola roxa",
+                    "alho-poró",
+                    "cogumelos",
+                    "limão siciliano",
+                    "risoni",
+                    "parmesão"
+                ]
+            },
+            {
+                "nome": "Camarão com Nhoque Crocante",
+                "descricao": "Camarão com alho, cebola caramelizada, tomate cereja, brócolis, nata, bacon e nhoque de macaxeira frito sobre fondue de queijos",
+                "ingredientes": [
+                    "camarão",
+                    "alho",
+                    "cebola",
+                    "tomate cereja",
+                    "brócolis",
+                    "nata",
+                    "bacon",
+                    "macaxeira",
+                    "queijo"
+                ]
+            },
+            {
+                "nome": "Camarão Terra Brasilis",
+                "descricao": "Camarão com manteiga de ervas, cebola caramelizada, pimenta biquinho, queijo de coalho, risoto de banana da terra, castanha do Pará e mel de engenho",
+                "ingredientes": [
+                    "camarão",
+                    "manteiga",
+                    "cebola",
+                    "pimenta biquinho",
+                    "queijo de coalho",
+                    "arroz",
+                    "banana da terra",
+                    "castanha do pará",
+                    "mel de engenho"
+                ]
+            },
+            {
+                "nome": "Camarão com Quinoa e Purê de Banana",
+                "descricao": "Camarão com nata, limão siciliano, coentro, quinoa com legumes, grãos, maçã verde, bacon e purê de banana da terra com castanha de caju",
+                "ingredientes": [
+                    "camarão",
+                    "nata",
+                    "limão siciliano",
+                    "coentro",
+                    "quinoa",
+                    "legumes",
+                    "maçã verde",
+                    "bacon",
+                    "banana da terra",
+                    "castanha de caju"
+                ]
+            },
+            {
+                "nome": "Nhoque de Banana da Terra com Camarão",
+                "descricao": "Nhoque de banana com camarões, molho de nata, cebola roxa, crispy de carne de sol e palitinhos de queijo coalho",
+                "ingredientes": [
+                    "banana da terra",
+                    "camarão",
+                    "nata",
+                    "cebola roxa",
+                    "carne de sol",
+                    "queijo de coalho"
+                ]
+            },
+            {
+                "nome": "Grelhados do Mar",
+                "descricao": "Camarão, peixe, lula e polvo grelhados com arroz com brócolis e legumes com batata e bacon",
+                "ingredientes": [
+                    "camarão",
+                    "peixe",
+                    "lula",
+                    "polvo",
+                    "arroz",
+                    "brócolis",
+                    "legumes",
+                    "batata",
+                    "bacon"
+                ]
+            },
+            {
+                "nome": "Moqueca do Mar",
+                "descricao": "Camarão, peixe, lula e polvo com tomate, cebola, pimentão, leite de coco, coentro, azeite de dendê, arroz, pirão e farofa",
+                "ingredientes": [
+                    "camarão",
+                    "peixe",
+                    "lula",
+                    "polvo",
+                    "tomate",
+                    "cebola",
+                    "pimentão",
+                    "leite de coco",
+                    "coentro",
+                    "azeite de dendê",
+                    "arroz",
+                    "pirão",
+                    "farofa"
+                ]
+            },
+            {
+                "nome": "Frutos do Mar ao Azeite de Ervas",
+                "descricao": "Camarão, peixe, lula e polvo com azeite de ervas, champignon, alcaparras, tomate cereja e risoto de limão siciliano com abobrinha",
+                "ingredientes": [
+                    "camarão",
+                    "peixe",
+                    "lula",
+                    "polvo",
+                    "azeite",
+                    "champignon",
+                    "alcaparras",
+                    "tomate cereja",
+                    "arroz",
+                    "limão siciliano",
+                    "abobrinha"
+                ]
+            },
+            {
+                "nome": "Risoto de Polvo e Camarão",
+                "descricao": "Arroz arbóreo com polvo, camarão grelhado e molho aioli com páprica",
+                "ingredientes": [
+                    "arroz arbóreo",
+                    "polvo",
+                    "camarão",
+                    "aioli",
+                    "páprica"
+                ]
+            },
+            {
+                "nome": "Grelhados das Dunas",
+                "descricao": "Lagosta, camarão, peixe, lula e polvo grelhados com arroz à provençal, legumes e batata com bacon",
+                "ingredientes": [
+                    "lagosta",
+                    "camarão",
+                    "peixe",
+                    "lula",
+                    "polvo",
+                    "arroz",
+                    "legumes",
+                    "batata",
+                    "bacon"
+                ]
+            },
+            {
+                "nome": "Lagosta Ponta Negra",
+                "descricao": "Lagosta e camarão grelhados com molho de alcaparras e champignon e risoto de limão siciliano com abobrinha",
+                "ingredientes": [
+                    "lagosta",
+                    "camarão",
+                    "alcaparras",
+                    "champignon",
+                    "arroz",
+                    "limão siciliano",
+                    "abobrinha"
+                ]
+            },
+            {
+                "nome": "Peixe Grelhado",
+                "descricao": "Peixe grelhado com arroz com brócolis e legumes com batata e bacon",
+                "ingredientes": [
+                    "peixe",
+                    "arroz",
+                    "brócolis",
+                    "legumes",
+                    "batata",
+                    "bacon"
+                ]
+            },
+            {
+                "nome": "Peixe com Quinoa e Purê de Banana",
+                "descricao": "Peixe grelhado com nata e limão siciliano sobre quinoa com legumes, maçã verde e bacon. Purê de banana com castanha",
+                "ingredientes": [
+                    "peixe",
+                    "nata",
+                    "limão siciliano",
+                    "quinoa",
+                    "legumes",
+                    "maçã verde",
+                    "bacon",
+                    "banana da terra",
+                    "castanha de caju"
+                ]
+            },
+            {
+                "nome": "Peixe Vila Flor",
+                "descricao": "Peixe com manteiga e castanha do Pará sobre legumes. Arroz com brócolis e purê de banana com castanha",
+                "ingredientes": [
+                    "peixe",
+                    "manteiga",
+                    "castanha do pará",
+                    "legumes",
+                    "arroz",
+                    "brócolis",
+                    "banana da terra",
+                    "castanha de caju"
+                ]
+            },
+            {
+                "nome": "Peixe Tropical",
+                "descricao": "Peixe empanado com gergelim sobre molho de manga com arroz com brócolis e purê de batata",
+                "ingredientes": [
+                    "peixe",
+                    "gergelim",
+                    "manga",
+                    "arroz",
+                    "brócolis",
+                    "batata"
+                ]
+            },
+            {
+                "nome": "Peixe com Amêndoas e Risoto Siciliano",
+                "descricao": "Peixe com manteiga e amêndoas e risoto de limão siciliano com abobrinha",
+                "ingredientes": [
+                    "peixe",
+                    "manteiga",
+                    "amêndoas",
+                    "arroz",
+                    "limão siciliano",
+                    "abobrinha"
+                ]
+            },
+            {
+                "nome": "Salmão Tropical",
+                "descricao": "Salmão com gergelim sobre molho de manga com arroz com brócolis e purê de batata",
+                "ingredientes": [
+                    "salmão",
+                    "gergelim",
+                    "manga",
+                    "arroz",
+                    "brócolis",
+                    "batata"
+                ]
+            },
+            {
+                "nome": "Salmão Teriyaki",
+                "descricao": "Salmão com molho teriyaki, abacaxi, castanha de caju, arroz com castanhas e legumes com batata e bacon",
+                "ingredientes": [
+                    "salmão",
+                    "teriyaki",
+                    "abacaxi",
+                    "castanha de caju",
+                    "arroz",
+                    "legumes",
+                    "batata",
+                    "bacon"
+                ]
+            },
+            {
+                "nome": "Peixe ao Molho de Camarão",
+                "descricao": "Peixe grelhado com molho cremoso de camarão, tomate, coentro, arroz com brócolis e purê de batata",
+                "ingredientes": [
+                    "peixe",
+                    "camarão",
+                    "tomate",
+                    "coentro",
+                    "arroz",
+                    "brócolis",
+                    "batata"
+                ]
+            },
+            {
+                "nome": "Peixe com Risoto de Camarão",
+                "descricao": "Peixe grelhado com tomate cereja e alho e risoto de camarão com tomate e abobrinha",
+                "ingredientes": [
+                    "peixe",
+                    "tomate cereja",
+                    "alho",
+                    "arroz",
+                    "camarão",
+                    "tomate",
+                    "abobrinha"
+                ]
+            },
+            {
+                "nome": "Peixe com Camarão Brisa do Mar",
+                "descricao": "Peixe e camarão com azeite, vinho branco, limão e castanhas do Pará. Mousseline de jerimum e arroz com brócolis",
+                "ingredientes": [
+                    "peixe",
+                    "camarão",
+                    "azeite",
+                    "vinho branco",
+                    "limão",
+                    "castanha do pará",
+                    "jerimum",
+                    "arroz",
+                    "brócolis"
+                ]
+            },
+            {
+                "nome": "Moqueca de Peixe e Camarão",
+                "descricao": "Peixe e camarão com tomate, cebola, pimentão, leite de coco, coentro, azeite de dendê, arroz, pirão e farofa",
+                "ingredientes": [
+                    "peixe",
+                    "camarão",
+                    "tomate",
+                    "cebola",
+                    "pimentão",
+                    "leite de coco",
+                    "coentro",
+                    "azeite de dendê",
+                    "arroz",
+                    "pirão",
+                    "farofa"
+                ]
+            },
+            {
+                "nome": "Salmão com Camarão Teriyaki",
+                "descricao": "Salmão com camarão ao teriyaki, abacaxi, castanha de caju, arroz com castanhas e legumes com batata e bacon",
+                "ingredientes": [
+                    "salmão",
+                    "camarão",
+                    "teriyaki",
+                    "abacaxi",
+                    "castanha de caju",
+                    "arroz",
+                    "legumes",
+                    "batata",
+                    "bacon"
+                ]
+            },
+            {
+                "nome": "Filé ao Catupiry",
+                "descricao": "Filé mignon com bacon, catupiry e ervas sobre molho rôti com champignon. Arroz à grega e purê de batata",
+                "ingredientes": [
+                    "filé mignon",
+                    "bacon",
+                    "catupiry",
+                    "ervas",
+                    "molho rôti",
+                    "champignon",
+                    "arroz",
+                    "batata"
+                ]
+            },
+            {
+                "nome": "Filé Potiguar",
+                "descricao": "Filé mignon com bacon sobre molho rôti com aligot de macaxeira e farofa de bacon. Arroz de carne de sol e banana empanada",
+                "ingredientes": [
+                    "filé mignon",
+                    "bacon",
+                    "molho rôti",
+                    "macaxeira",
+                    "arroz",
+                    "carne de sol",
+                    "banana"
+                ]
+            },
+            {
+                "nome": "Filé Merlot",
+                "descricao": "Filé mignon com bacon ao molho de vinho tinto. Risoto ao funghi com bacon, alho-poró e parmesão",
+                "ingredientes": [
+                    "filé mignon",
+                    "bacon",
+                    "vinho tinto",
+                    "arroz",
+                    "funghi",
+                    "alho-poró",
+                    "parmesão"
+                ]
+            },
+            {
+                "nome": "Filé do Bosque",
+                "descricao": "Filé mignon com bacon ao molho de frutas vermelhas. Fettuccine aos quatro queijos com bacon",
+                "ingredientes": [
+                    "filé mignon",
+                    "bacon",
+                    "frutas vermelhas",
+                    "fettuccine",
+                    "queijo"
+                ]
+            },
+            {
+                "nome": "Filé Trufado com Risoto de Provolone",
+                "descricao": "Filé mignon com bacon sobre molho rôti com alho-poró. Risoto de provolone com azeite trufado e geleia de damasco",
+                "ingredientes": [
+                    "filé mignon",
+                    "bacon",
+                    "molho rôti",
+                    "alho-poró",
+                    "arroz",
+                    "provolone",
+                    "azeite trufado",
+                    "damasco"
+                ]
+            },
+            {
+                "nome": "Filé aos Quatro Queijos",
+                "descricao": "Filé mignon com bacon ao molho de queijos. Arroz à grega e batata rústica com parmesão",
+                "ingredientes": [
+                    "filé mignon",
+                    "bacon",
+                    "queijo",
+                    "arroz",
+                    "batata",
+                    "parmesão"
+                ]
+            },
+            {
+                "nome": "Carne de Sol Sertaneja",
+                "descricao": "Carne de sol na manteiga do sertão com cebola roxa, coentro, nata, arroz cremoso da terra, queijo de coalho e macaxeira frita",
+                "ingredientes": [
+                    "carne de sol",
+                    "manteiga do sertão",
+                    "cebola roxa",
+                    "coentro",
+                    "nata",
+                    "arroz",
+                    "queijo de coalho",
+                    "macaxeira"
+                ]
+            },
+            {
+                "nome": "Frango Mediterrâneo",
+                "descricao": "Frango empanado sobre fettuccine ao pesto cremoso com molho de tomate, mozarela e parmesão",
+                "ingredientes": [
+                    "frango",
+                    "fettuccine",
+                    "pesto",
+                    "molho de tomate",
+                    "queijo mozarela",
+                    "queijo parmesão"
+                ]
+            }
+        ],
+        "saladas": [
+            {
+                "nome": "Salada Provençal",
+                "descricao": "Alface, cenoura, palmito, tomate seco, mozarela de búfala e crocante de parmesão. Acompanha molho de iogurte e torradas",
+                "ingredientes": [
+                    "alface",
+                    "cenoura",
+                    "palmito",
+                    "tomate seco",
+                    "mozarela de búfala",
+                    "parmesão",
+                    "iogurte",
+                    "torradas"
+                ]
+            },
+            {
+                "nome": "Salada de Gorgonzola com Pera",
+                "descricao": "Pera assada, queijo gorgonzola, mix de nuts, alface, cenoura, palmito e tomate. Molho de mel de engenho e torradas",
+                "ingredientes": [
+                    "pera",
+                    "gorgonzola",
+                    "nuts",
+                    "alface",
+                    "cenoura",
+                    "palmito",
+                    "tomate",
+                    "mel de engenho",
+                    "torradas"
+                ]
+            },
+            {
+                "nome": "Salada de Frango",
+                "descricao": "Peito de frango marinado em mostarda e ervas, alface, cenoura, palmito, tomate e crocante de parmesão. Molho de mostarda e mel e torradas",
+                "ingredientes": [
+                    "frango",
+                    "mostarda",
+                    "ervas",
+                    "alface",
+                    "cenoura",
+                    "palmito",
+                    "tomate",
+                    "parmesão",
+                    "mel",
+                    "torradas"
+                ]
+            },
+            {
+                "nome": "Salada de Camarão",
+                "descricao": "Camarão grelhado, alface, cenoura, palmito, tomate e crocante de parmesão. Molho de iogurte com ervas e torradas",
+                "ingredientes": [
+                    "camarão",
+                    "alface",
+                    "cenoura",
+                    "palmito",
+                    "tomate",
+                    "parmesão",
+                    "iogurte",
+                    "ervas",
+                    "torradas"
+                ]
+            },
+            {
+                "nome": "Risoto Brie (Vegetariano)",
+                "descricao": "Risoto de queijo brie, damasco, abobrinha e amêndoas. Molho de frutas vermelhas",
+                "ingredientes": [
+                    "arroz",
+                    "queijo brie",
+                    "damasco",
+                    "abobrinha",
+                    "amêndoas",
+                    "frutas vermelhas"
+                ]
+            },
+            {
+                "nome": "Moqueca Vegana",
+                "descricao": "Jerimum, batata e banana da terra ao molho moqueca com leite de coco, castanha de caju e cheiro verde. Arroz branco",
+                "ingredientes": [
+                    "jerimum",
+                    "batata",
+                    "banana da terra",
+                    "leite de coco",
+                    "castanha de caju",
+                    "cheiro verde",
+                    "arroz"
+                ]
+            },
+            {
+                "nome": "Risoto Pomodoro (Vegano)",
+                "descricao": "Risoto de cogumelos com tomate fresco, brócolis, molho de tomate e castanha de caju",
+                "ingredientes": [
+                    "arroz",
+                    "cogumelos",
+                    "tomate",
+                    "brócolis",
+                    "castanha de caju"
+                ]
+            },
+            {
+                "nome": "Fettuccine ao Creme de Castanha (Vegano)",
+                "descricao": "Fettuccine ao bechamel de castanha de caju com julienne de legumes, tomate seco e brócolis. Azeite de ervas e nuts",
+                "ingredientes": [
+                    "fettuccine",
+                    "castanha de caju",
+                    "legumes",
+                    "tomate seco",
+                    "brócolis",
+                    "azeite",
+                    "ervas",
+                    "nuts"
+                ]
+            }
+        ],
+        "sobremesas": [
+            {
+                "nome": "Petit Gateau de Chocolate",
+                "descricao": "Com sorvete artesanal de baunilha",
+                "ingredientes": [
+                    "chocolate",
+                    "baunilha"
+                ]
+            },
+            {
+                "nome": "Petit Gateau de Doce de Leite",
+                "descricao": "Com sorvete artesanal de creme crocante e calda de laranja",
+                "ingredientes": [
+                    "doce de leite",
+                    "creme",
+                    "laranja"
+                ]
+            },
+            {
+                "nome": "Petit Gateau de Pistache",
+                "descricao": "Com sorvete artesanal de baunilha",
+                "ingredientes": [
+                    "pistache",
+                    "baunilha"
+                ]
+            },
+            {
+                "nome": "Taça Romeu e Julieta",
+                "descricao": "Sorvete de nata goiaba, mousse de queijo, calda de goiaba, queijo de coalho e biscoito de castanha",
+                "ingredientes": [
+                    "nata",
+                    "goiaba",
+                    "queijo",
+                    "queijo de coalho",
+                    "castanha"
+                ]
+            },
+            {
+                "nome": "Taça Tiramisu",
+                "descricao": "Sorvete de cappuccino, mousse de queijo, biscoito champagne, calda de café e crocante de cacau",
+                "ingredientes": [
+                    "café",
+                    "queijo",
+                    "biscoito champagne",
+                    "cacau"
+                ]
+            },
+            {
+                "nome": "Naked de Ninho",
+                "descricao": "Torta de chocolate, mousse de ninho, praliné de castanhas, calda de chocolate e sorvete de baunilha",
+                "ingredientes": [
+                    "chocolate",
+                    "leite ninho",
+                    "castanhas",
+                    "baunilha"
+                ]
+            },
+            {
+                "nome": "Mil Folhas de Doce de Leite",
+                "descricao": "Massa folhada com doce de leite e sorvete artesanal de baunilha",
+                "ingredientes": [
+                    "massa folhada",
+                    "doce de leite",
+                    "baunilha"
+                ]
+            },
+            {
+                "nome": "Macaron Petit com Sorvete de Avelã",
+                "descricao": "Biscoito de merengue de castanha, sorvete de avelã, calda de chocolate e amêndoas",
+                "ingredientes": [
+                    "castanha",
+                    "avelã",
+                    "chocolate",
+                    "amêndoas"
+                ]
+            },
+            {
+                "nome": "Supreme de Pistache",
+                "descricao": "Brownie, creme de ninho, castanha trufada, chocolate branco e pistache. Calda de cacau",
+                "ingredientes": [
+                    "brownie",
+                    "leite ninho",
+                    "castanha",
+                    "chocolate branco",
+                    "pistache",
+                    "cacau"
+                ]
+            },
+            {
+                "nome": "Cocada Maria Bonita",
+                "descricao": "Cocada cremosa ao forno com sorvete de tapioca, castanha de caju e calda de maracujá",
+                "ingredientes": [
+                    "coco",
+                    "tapioca",
+                    "castanha de caju",
+                    "maracujá"
+                ]
+            },
+            {
+                "nome": "Cartola Camarões",
+                "descricao": "Banana assada, ganache de chocolate branco e castanha de caju empanados sobre creme de queijo manteiga. Sorvete de baunilha e canela",
+                "ingredientes": [
+                    "banana",
+                    "chocolate branco",
+                    "castanha de caju",
+                    "queijo manteiga",
+                    "baunilha",
+                    "canela"
+                ]
+            },
+            {
+                "nome": "Creme de Papaya",
+                "descricao": "Com licor de cassis e crocante de cereais",
+                "ingredientes": [
+                    "mamão papaya",
+                    "licor de cassis",
+                    "cereais"
+                ]
+            },
+            {
+                "nome": "Sorvete de Doce de Leite Marmorizado",
+                "descricao": "Com calda de chocolate e amêndoas",
+                "ingredientes": [
+                    "doce de leite",
+                    "chocolate",
+                    "amêndoas"
+                ]
+            },
+            {
+                "nome": "Brownie Vegano",
+                "descricao": "Brownie de cacau com massa de jerimum e cocadinha cremosa",
+                "ingredientes": [
+                    "cacau",
+                    "jerimum",
+                    "coco"
+                ]
+            },
+            {
+                "nome": "Mousse Diet",
+                "descricao": "Mousse de chocolate, creme de queijo e calda de chocolate com castanhas",
+                "ingredientes": [
+                    "chocolate",
+                    "queijo",
+                    "castanhas"
+                ]
+            },
+            {
+                "nome": "Só um Docinho",
+                "descricao": "Tubinhos de massa de pastel com pistache ou doce de leite salgado e amendoim",
+                "ingredientes": [
+                    "massa de pastel",
+                    "pistache",
+                    "doce de leite",
+                    "amendoim"
+                ]
+            }
         ]
-    },
-    {
-        "prato": "PASTEL DE CARNE DE SOL/unidade",
-        "tags": [
-            "carne",
-            "sol"
-        ]
-    },
-    {
-        "prato": "PASTEL DE QUEIJO COALHO/unidade",
-        "tags": [
-            "bruschetta"
-        ]
-    },
-    {
-        "prato": "Dadinhos de tapioca coroados com creme formaggio, camarão grelhado,",
-        "tags": [
-            "ȩo de mel de engenho"
-        ]
-    },
-    {
-        "prato": "CASQUINHO DE CARANGUEJO/sob consulta    23",
-        "tags": [
-            "carne"
-        ]
-    },
-    {
-        "prato": "de coco. Cobeɞa com farofa.",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "parmesão. Acompanha torradas.",
-        "tags": [
-            "peixe",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "pimentões e coentro. Acompanha chips de batata doce.",
-        "tags": [
-            "ceviche de caju"
-        ]
-    },
-    {
-        "prato": "Caju marinado com azeite, suco de limão, leite de coco, castanha, cebola",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "ESCONDIDINHO DE CAMARÃO    31",
-        "tags": [
-            "nata",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "e coentro. Cobeɞo com purê de macaxeira e gratinado com queijo",
-        "tags": []
-    },
-    {
-        "prato": "ESCONDIDINHO DE CARNE DE SOL    29",
-        "tags": [
-            "desȩada",
-            "carne",
-            "sol"
-        ]
-    },
-    {
-        "prato": "nata fresca e coentro. Cobeɞa com purê de macaxeira e gratinada com",
-        "tags": []
-    },
-    {
-        "prato": "CAMARÃO PONTA NEGRA/8 unidades    75",
-        "tags": [
-            "empanado",
-            "camarão",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "golf e geleia de pimenta agridoce.",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Homenagem a um tradicional e querido bar potiguar. Camarão salteado",
-        "tags": [
-            "nata",
-            "acompanha",
-            "ȩnalizado"
-        ]
-    },
-    {
-        "prato": "torradas.",
-        "tags": [
-            "estrela do mar/",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Camarão empanado com gergelim, servido com molhos golf e aioli",
-        "tags": []
-    },
-    {
-        "prato": "POLVO MAR E SERTÃO/    99",
-        "tags": []
-    },
-    {
-        "prato": "cebola roxa, tomate, alcaparras, nata fresca e coentro. Acompanha",
-        "tags": []
-    },
-    {
-        "prato": "Camarão, catupiry e ervas.",
-        "tags": [
-            "batata trufada"
-        ]
-    },
-    {
-        "prato": "Batata frita Ȩninha temperada com sal, parmesão e azeite trufado.",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "Valores expressos em reais (R$)",
-        "tags": []
-    },
-    {
-        "prato": "Filé mignon (em cubos) grelhado.",
-        "tags": []
-    },
-    {
-        "prato": "Filé de peixe (em cubos) grelhado.",
-        "tags": [
-            "peixe",
-            "kids"
-        ]
-    },
-    {
-        "prato": "Filé de peito de frango (em fatias) grelhado.",
-        "tags": [
-            "frango kids"
-        ]
-    },
-    {
-        "prato": "Filezinho de camarão grelhado.",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Filezinho de camarão à milanesa.",
-        "tags": [
-            "empanado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Filé mignon (em cubos) à milanesa, com molho",
-        "tags": [
-            "gratinado"
-        ]
-    },
-    {
-        "prato": "PARMEGIANITO    52",
-        "tags": []
-    },
-    {
-        "prato": "por Petit Poti",
-        "tags": []
-    },
-    {
-        "prato": "Em parceria com Petit Poti, restaurante potiguar",
-        "tags": []
-    },
-    {
-        "prato": "alimentar, um espaço dedicado aos nossos",
-        "tags": []
-    },
-    {
-        "prato": "Sem adição de sal, açúcar, glúten, leite e derivados.",
-        "tags": [
-            "comidinhas"
-        ]
-    },
-    {
-        "prato": "Todo em textura de purê. Ragú de carne bovina,",
-        "tags": [
-            "brócolis"
-        ]
-    },
-    {
-        "prato": "PÊ‑É‑FINHO BRASILEIRO    39",
-        "tags": [
-            "ȩlé de"
-        ]
-    },
-    {
-        "prato": "peito de frango desȨadinho, brócolis, ervilha, cenoura,",
-        "tags": []
-    },
-    {
-        "prato": "RISOTINHO DE FRANGO COM LEGUMES    42",
-        "tags": [
-            "massa"
-        ]
-    },
-    {
-        "prato": "abobrinha e tomate com o super molho vermelho꞉",
-        "tags": []
-    },
-    {
-        "prato": "PARAFUSINHO À BOLONHESA    45",
-        "tags": []
-    },
-    {
-        "prato": "100% puro, leite de coco caseiro, batata‑doce",
-        "tags": []
-    },
-    {
-        "prato": "MOUSSE DE CACAU    28",
-        "tags": []
-    },
-    {
-        "prato": "Para mais informações, solicite tabela nutricional completa. Não realizamos modiȨcações nos pratos.",
-        "tags": []
-    },
-    {
-        "prato": "e dois acompanhamentos.",
-        "tags": []
-    },
-    {
-        "prato": "&vegano",
-        "tags": [
-            "provençal"
-        ]
-    },
-    {
-        "prato": "Alface, cenoura, palmito, tomate seco, mozarela de búfala",
-        "tags": []
-    },
-    {
-        "prato": "e torradas gratinadas.",
-        "tags": [
-            "salada de gorgonzola",
-            "pera"
-        ]
-    },
-    {
-        "prato": "COM CAMARÃO GRELHADO/   82",
-        "tags": []
-    },
-    {
-        "prato": "temperadas. Servidas com alface, cenoura, palmito, tomate",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "e torradas gratinadas.",
-        "tags": [
-            "frango"
-        ]
-    },
-    {
-        "prato": "Peito de frango () marinado com mostarda e ervas",
-        "tags": [
-            "grelhado"
-        ]
-    },
-    {
-        "prato": "ao azeite de ervas e alho e crocante de parmesão.",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "SALADA DE CAMARÃO    78",
-        "tags": [
-            "grelhado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "palmito, tomate ao azeite de ervas e alho e crocante de parmesão.",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "RISOTO POMODORO (VEGANO)    57",
-        "tags": [
-            "brócolis"
-        ]
-    },
-    {
-        "prato": "molho de tomate e castanha de caju.",
-        "tags": [
-            "ao creme de castanha",
-            "fettuccine",
-            "vegano"
-        ]
-    },
-    {
-        "prato": "Feɠuccine ao bechamel de castanhas de caju com julienne",
-        "tags": []
-    },
-    {
-        "prato": "de ervas e mix de nuts temperadas.",
-        "tags": []
-    },
-    {
-        "prato": "adaptar nossas receitas à sua restrição. No entanto, há traços de glúten, lactose e castanhas em nossa",
-        "tags": []
-    },
-    {
-        "prato": "de nosso maître para dúvidas e recomendações.",
-        "tags": [
-            "vegetariano",
-            "risoto brie"
-        ]
-    },
-    {
-        "prato": "Risoto de queijo brie, damasco, abobrinha e amêndoas. Servido",
-        "tags": []
-    },
-    {
-        "prato": "MOQUECA VEGANA    50",
-        "tags": []
-    },
-    {
-        "prato": "com leite de coco, castanha de caju e cheiro verde. Acompanha",
-        "tags": []
-    },
-    {
-        "prato": "Valores expressos em reais (R$)",
-        "tags": []
-    },
-    {
-        "prato": "de duas a três pessoas, e a porção família, que serve aproximadamente quatro pessoas.",
-        "tags": [
-            "grega",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Camarão à milanesa, servido sobre arroz à grega",
-        "tags": []
-    },
-    {
-        "prato": "com molho de tomate e gratinado com queijo",
-        "tags": [
-            "batata palha",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "Camarão salteado com molho branco, servido",
-        "tags": []
-    },
-    {
-        "prato": "Gratinado com queijos mozarela e parmesão.",
-        "tags": [
-            "batata palha",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "Camarão à milanesa, servido sobre arroz cremoso",
-        "tags": []
-    },
-    {
-        "prato": "azeitona preta e orégano. Gratinado com queijo",
-        "tags": [
-            "batata palha",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "Camarão refogado na manteiga do seɞão com",
-        "tags": [
-            "nata"
-        ]
-    },
-    {
-        "prato": "cremoso da terra e gratinado com queijo de coalho.",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "Camarão salteado com vinho branco, molho branco,",
-        "tags": [
-            "dijon"
-        ]
-    },
-    {
-        "prato": "arroz cremoso com julienne de legumes e ervilha.",
-        "tags": [
-            "gratinado"
-        ]
-    },
-    {
-        "prato": "Acompanha batata palha.",
-        "tags": [
-            "mangue"
-        ]
-    },
-    {
-        "prato": "FILÉ À PARMEGIANA",
-        "tags": [
-            "salteado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "de camarão, tomate, cebola roxa e coentro. Servido sobre",
-        "tags": [
-            "gratinado"
-        ]
-    },
-    {
-        "prato": "Acompanha macaxeira frita.",
-        "tags": [
-            "mignon",
-            "escalopes de ȩlé"
-        ]
-    },
-    {
-        "prato": "feɠuccine ao molho de tomate e gratinados com queijos",
-        "tags": [
-            "mozarela"
-        ]
-    },
-    {
-        "prato": "espaço",
-        "tags": []
-    },
-    {
-        "prato": "Camarão salteado com molho branco, vinho branco,",
-        "tags": []
-    },
-    {
-        "prato": "cremoso com alho‑poró e tomate seco, gratinado com",
-        "tags": [
-            "acompanha",
-            "catupiry"
-        ]
-    },
-    {
-        "prato": "com páprica.",
-        "tags": [
-            "r$"
-        ]
-    },
-    {
-        "prato": "PARA DUAS PESSOAS/",
-        "tags": [
-            "camarões"
-        ]
-    },
-    {
-        "prato": "Intolerantes e alérgicos꞉ dispomos de equipamentos e utensílios exclusivos para alérgicos e nos dedicamos a adaptar nossas",
-        "tags": [
-            "glúten"
-        ]
-    },
-    {
-        "prato": "pratos podem não listar todos os ingredientes. Solicite a presença de nosso maître para dúvidas e recomendações.",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Camarão empanado, recheado com catupiry",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "parmesão, vinho branco, bacon, julienne de legumes",
-        "tags": []
-    },
-    {
-        "prato": "CAMARÃO NO JERIMUM    154",
-        "tags": []
-    },
-    {
-        "prato": "polpa com camarões, queijo de coalho, lascas de",
-        "tags": [
-            "queijo coalho",
-            "gratinado"
-        ]
-    },
-    {
-        "prato": "e servido com macaxeira frita e arroz com brócolis.",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Camarão grelhado, servido sobre feɠuccine ao",
-        "tags": []
-    },
-    {
-        "prato": "bacon e julienne de legumes. Cobeɞo com farofa de",
-        "tags": []
-    },
-    {
-        "prato": "CAMARÃO BONFIM    134",
-        "tags": [
-            "salteado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "roxa, tomate, castanha de caju, pimenta biquinho,",
-        "tags": []
-    },
-    {
-        "prato": "de vatapá com toque de azeite de dendê.",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Camarão grelhado, regado com azeite de ervas, tomate",
-        "tags": [
-            "mozarela de búfala",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "com amêndoas e legumes grelhados com batata formaggio",
-        "tags": []
-    },
-    {
-        "prato": "CAMARÃO CIDADE DO SOL    148",
-        "tags": [
-            "empanado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Acompanha risoto de provolone com azeite trufado, crispy",
-        "tags": []
-    },
-    {
-        "prato": "CAMARÃO ALL’AMATRICIANA    135",
-        "tags": [
-            "salteado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "e assado com farofa de ervas e parmesão. Acompanha",
-        "tags": []
-    },
-    {
-        "prato": "RISONI DE CAMARÃO E COGUMELOS    134",
-        "tags": [
-            "salteado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "cogumelos e raspas de limão siciliano. Servido sobre risoni",
-        "tags": []
-    },
-    {
-        "prato": "camarão e parmesão.",
-        "tags": [
-            "camarão",
-            "nhoque crocante"
-        ]
-    },
-    {
-        "prato": "Camarão ȩambado e salteado com alho, cebola caramelizada,",
-        "tags": [
-            "nata",
-            "brócolis"
-        ]
-    },
-    {
-        "prato": "e bacon. Acompanha nhoque de macaxeira frito sobre fondue",
-        "tags": []
-    },
-    {
-        "prato": "CAMARÃO TERRA BRASILIS    135",
-        "tags": [
-            "salteado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "caramelizada, pimenta biquinho e queijo de coalho, servido",
-        "tags": []
-    },
-    {
-        "prato": "do Pará assada, cebolinha e redução de mel de engenho.",
-        "tags": [
-            "purê de banana"
-        ]
-    },
-    {
-        "prato": "Camarão grelhado com molho de nata, limão siciliano e",
-        "tags": []
-    },
-    {
-        "prato": "verde e bacon. Acompanha purê de banana da terra",
-        "tags": []
-    },
-    {
-        "prato": "COM CAMARÃO/sob consulta    130",
-        "tags": [
-            "camarões",
-            "nhoque"
-        ]
-    },
-    {
-        "prato": "salteados com molho de nata, cebola roxa e cebolinha,",
-        "tags": [
-            "carne",
-            "sol",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "de queijo coalho crocantes.",
-        "tags": [
-            "teryiaki",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Camarão salteado com molho teriyaki, abacaxi grelhado,",
-        "tags": [
-            "acompanha",
-            "cebolinha"
-        ]
-    },
-    {
-        "prato": "com castanhas e legumes salteados com batata formaggio.",
-        "tags": []
-    },
-    {
-        "prato": "com lagosta",
-        "tags": [
-            "grelhados das dunas"
-        ]
-    },
-    {
-        "prato": "Frutos do mar (lagosta/2 caudas, camarão, peixe,",
-        "tags": []
-    },
-    {
-        "prato": "e legumes grelhados com batata formaggio com bacon.",
-        "tags": [
-            "lagosta"
-        ]
-    },
-    {
-        "prato": "Lagosta/2 caudas e camarão grelhados, regados",
-        "tags": []
-    },
-    {
-        "prato": "Acompanha risoto de limão siciliano com abobrinha",
-        "tags": [
-            "gergelim"
-        ]
-    },
-    {
-        "prato": "GRELHADOS DO MAR    184",
-        "tags": [
-            "peixe",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "grelhados, servidos com arroz com brócolis e",
-        "tags": []
-    },
-    {
-        "prato": "com bacon.",
-        "tags": [
-            "moqueca do mar"
-        ]
-    },
-    {
-        "prato": "Frutos do mar (camarão, peixe, lula e polvo)",
-        "tags": []
-    },
-    {
-        "prato": "de coco, coentro e leve toque de azeite de dendê.",
-        "tags": [
-            "peixe",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "FRUTOS DO MAR AO AZEITE DE ERVAS    189",
-        "tags": [
-            "peixe",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "grelhados, regados com molho de azeite de ervas,",
-        "tags": [
-            "acompanha",
-            "champignon"
-        ]
-    },
-    {
-        "prato": "risoto de limão siciliano com abobrinha e gergelim.",
-        "tags": [
-            "risoto de polvo",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Arroz arbóreo com polvo em seu próprio caldo,",
-        "tags": [
-            "grelhado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "leve toque de páprica defumada.",
-        "tags": [
-            "a venda",
-            "ser suspensa",
-            "pesca",
-            "lagosta"
-        ]
-    },
-    {
-        "prato": "Valores expressos em reais (R$)",
-        "tags": []
-    },
-    {
-        "prato": "do mar",
-        "tags": []
-    },
-    {
-        "prato": "PARA DUAS PESSOAS/",
-        "tags": [
-            "peixe"
-        ]
-    },
-    {
-        "prato": "Peixe empanado com gergelim, servido sobre molho",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "e purê de batata.",
-        "tags": [
-            "risoto siciliano"
-        ]
-    },
-    {
-        "prato": "Peixe grelhado, regado com molho de manteiga",
-        "tags": []
-    },
-    {
-        "prato": "com abobrinha e gergelim.",
-        "tags": [
-            "salmão tropical"
-        ]
-    },
-    {
-        "prato": "Salmão com crosta de gergelim, servido sobre molho",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "e purê de batata.",
-        "tags": [
-            "peixe",
-            "grelhado"
-        ]
-    },
-    {
-        "prato": "Peixe grelhado, servido com arroz com brócolis",
-        "tags": []
-    },
-    {
-        "prato": "com bacon.",
-        "tags": [
-            "peixe"
-        ]
-    },
-    {
-        "prato": "Peixe grelhado, regado com molho de manteiga",
-        "tags": [
-            "pará"
-        ]
-    },
-    {
-        "prato": "legumes. Acompanha arroz com brócolis e purê",
-        "tags": []
-    },
-    {
-        "prato": "E PURÊ DE BANANA       |  184",
-        "tags": [
-            "nata",
-            "peixe",
-            "grelhado"
-        ]
-    },
-    {
-        "prato": "e coentro, servido sobre quinoa com legumes,",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "banana da terra Ȩnalizado com castanha de caju.",
-        "tags": [
-            "porções de"
-        ]
-    },
-    {
-        "prato": "SALMÃO TERIYAKI    146",
-        "tags": [
-            "grelhado"
-        ]
-    },
-    {
-        "prato": "castanha de caju, cebolinha e gergelim. Acompanha arroz",
-        "tags": []
-    },
-    {
-        "prato": "com bacon.",
-        "tags": [
-            "r$"
-        ]
-    },
-    {
-        "prato": "peixes",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "PARA DUAS PESSOAS/ +",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Peixe grelhado, cobeɞo com molho cremoso de camarão,",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "e purê de batata.",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Peixe grelhado, regado com azeite, tomate cereja e alho",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "e abobrinha.",
-        "tags": [
-            "brisa do mar"
-        ]
-    },
-    {
-        "prato": "Peixe e camarão grelhados, regados com molho de azeite,",
-        "tags": [
-            "vinho branco",
-            "pará"
-        ]
-    },
-    {
-        "prato": "com mousseline de jerimum sem lactose e arroz com",
-        "tags": [
-            "salteado",
-            "brócolis"
-        ]
-    },
-    {
-        "prato": "MOQUECA DE PEIXE E CAMARÃO    168",
-        "tags": [
-            "peixe",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "pimentão, leite de coco, coentro e leve toque de azeite",
-        "tags": [
-            "peixe",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "e farofa.",
-        "tags": [
-            "camarão",
-            "salmão",
-            "teriyaki"
-        ]
-    },
-    {
-        "prato": "Salmão ao forno, cobeɞo com camarão ao molho",
-        "tags": [
-            "cebolinha",
-            "grelhado",
-            "teriyaki"
-        ]
-    },
-    {
-        "prato": "e gergelim. Acompanha arroz com castanhas e legumes",
-        "tags": []
-    },
-    {
-        "prato": "carnes",
-        "tags": [
-            "duas"
-        ]
-    },
-    {
-        "prato": "FILÉ À PARMEGIANA    144",
-        "tags": [
-            "ao catupiry",
-            "filé"
-        ]
-    },
-    {
-        "prato": "FILÉ POTIGUAR    142",
-        "tags": [
-            "filé",
-            "merlot"
-        ]
-    },
-    {
-        "prato": "Medalhões de Ȩlé mignon grelhados com bacon ao molho",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "alho‑poró e crocante de parmesão.",
-        "tags": [
-            "filé"
-        ]
-    },
-    {
-        "prato": "Medalhões de Ȩlé mignon grelhados com bacon, ao molho",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "feɠuccine aos quatro queijos com crocante de bacon.",
-        "tags": [
-            "mignon",
-            "medalhões de ȩlé"
-        ]
-    },
-    {
-        "prato": "rôti, cobeɞos com aligot de macaxeira e farofa de bacon.",
-        "tags": [
-            "carne",
-            "sol",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "Medalhões de Ȩlé mignon grelhados com bacon, com",
-        "tags": [
-            "creme de catupiry"
-        ]
-    },
-    {
-        "prato": "champignon. Acompanha arroz à grega (ervilha, cenoura,",
-        "tags": [
-            "presunto"
-        ]
-    },
-    {
-        "prato": "Escalopes de Ȩlé mignon à milanesa, servidos sobre",
-        "tags": []
-    },
-    {
-        "prato": "mozarela e parmesão.",
-        "tags": [
-            "provolone"
-        ]
-    },
-    {
-        "prato": "Medalhões de Ȩlé mignon grelhados com bacon e",
-        "tags": []
-    },
-    {
-        "prato": "Acompanha risoto de provolone com azeite trufado, crispy",
-        "tags": []
-    },
-    {
-        "prato": "CARNE DE SOL SERTANEJA    102",
-        "tags": [
-            "carne",
-            "sol"
-        ]
-    },
-    {
-        "prato": "seɞão, cebola roxa, coentro e nata fresca. Servida sobre",
-        "tags": []
-    },
-    {
-        "prato": "Acompanha macaxeira frita.",
-        "tags": [
-            "frango mediterrâneo"
-        ]
-    },
-    {
-        "prato": "Filé de frango empanado, servido sobre feɠuccine ao",
-        "tags": [
-            "gratinado"
-        ]
-    },
-    {
-        "prato": "queijos mozarela e parmesão.",
-        "tags": [
-            "porções de"
-        ]
-    },
-    {
-        "prato": "FILÉ AOS QUATRO QUEIJOS    146",
-        "tags": [
-            "mignon",
-            "medalhões de ȩlé"
-        ]
-    },
-    {
-        "prato": "cremoso de queijos. Acompanha arroz à grega e batata",
-        "tags": []
-    },
-    {
-        "prato": "Valores expressos em reais (R$)",
-        "tags": []
-    },
-    {
-        "prato": "Novidade em",
-        "tags": []
-    },
-    {
-        "prato": "Algumas opções sob",
-        "tags": []
-    },
-    {
-        "prato": "CAMARÃO DOM ALFREDO    87",
-        "tags": [
-            "grelhado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "queijo parmesão, vinho branco, bacon e julienne de legumes. Cobeɞo",
-        "tags": []
-    },
-    {
-        "prato": "RISONI DE CAMARÃO E COGUMELOS    88",
-        "tags": [
-            "salteado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "raspas de limão siciliano. Servido sobre risoni (massa grano duro com",
-        "tags": [
-            "camarão"
-        ]
-    },
-    {
-        "prato": "NHOQUE DE BANANA DA TERRA COM CAMARÃO    89",
-        "tags": [
-            "camarões",
-            "nhoque"
-        ]
-    },
-    {
-        "prato": "molho de nata, cebola roxa e cebolinha, cobeɞos com crispy de carne",
-        "tags": [
-            "queijo coalho",
-            "sol",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "CAMARÃO TERRA BRASILIS    88",
-        "tags": [
-            "salteado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "pimenta biquinho e queijo de coalho, servido sobre risoto de banana",
-        "tags": [
-            "pará",
-            "cebolinha"
-        ]
-    },
-    {
-        "prato": "de mel de engenho.",
-        "tags": [
-            "peixe",
-            "risoto siciliano"
-        ]
-    },
-    {
-        "prato": "Tilápia grelhada, regada com molho de manteiga com amêndoas.",
-        "tags": [
-            "servida"
-        ]
-    },
-    {
-        "prato": "PEIXE COM CAMARÃO BRISA DO MAR     95",
-        "tags": [
-            "tilápia",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "branco, limão e castanhas do Pará laminadas. Servido com mousseline",
-        "tags": [
-            "salteado"
-        ]
-    },
-    {
-        "prato": "FILÉ À PARMEGIANA    93",
-        "tags": [
-            "mignon",
-            "escalopes de ȩlé"
-        ]
-    },
-    {
-        "prato": "molho de tomate e gratinados com queijos mozarela e parmesão.",
-        "tags": [
-            "grelhado",
-            "batata rústica"
-        ]
-    },
-    {
-        "prato": "Tentáculos de polvo grelhados com azeite de ervas e servidos com",
-        "tags": [
-            "acompanha",
-            "brócolis"
-        ]
-    },
-    {
-        "prato": "maionese caseira.",
-        "tags": []
-    },
-    {
-        "prato": "Apenas mudanças simples, como retirada de ingredientes, são admitidas.",
-        "tags": [
-            "chef",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Camarão à milanesa, servido sobre arroz cremoso de manjericão e",
-        "tags": [
-            "gratinado"
-        ]
-    },
-    {
-        "prato": "com queijo mozarela. Acompanha batata palha.",
-        "tags": [
-            "risoto de polvo",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "Arroz arbóreo com polvo em seu próprio caldo, servido com camarão",
-        "tags": [
-            "grelhado"
-        ]
-    },
-    {
-        "prato": "FILÉ TRUFADO COM RISOTO DE PROVOLONE    108",
-        "tags": [
-            "mignon",
-            "medalhões de ȩlé"
-        ]
-    },
-    {
-        "prato": "molho rôti com crispy de alho‑poró. Acompanha risoto de provolone",
-        "tags": []
-    },
-    {
-        "prato": "CAMARÃO INTERNACIONAL    83",
-        "tags": [
-            "salteado",
-            "camarão"
-        ]
-    },
-    {
-        "prato": "com ervilha e presunto. Gratinado com queijos mozarela e parmesão.",
-        "tags": [
-            "batata palha",
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "FRANGO MEDITERRÂNEO    67",
-        "tags": [
-            "filé",
-            "empanado"
-        ]
-    },
-    {
-        "prato": "cremoso. Gratinado com molho de tomate e queijos mozarela e",
-        "tags": []
-    },
-    {
-        "prato": "sobre",
-        "tags": []
-    },
-    {
-        "prato": "SUPREME DE PISTACHE    34",
-        "tags": []
-    },
-    {
-        "prato": "castanha trufada e ganache de chocolate branco",
-        "tags": []
-    },
-    {
-        "prato": "PETIT GATEAU DE CHOCOLATE    33",
-        "tags": [
-            "petit"
-        ]
-    },
-    {
-        "prato": "PETIT GATEAU DE PISTACHE    37",
-        "tags": []
-    },
-    {
-        "prato": "Com sorvete aɞesanal de creme crocante e",
-        "tags": []
-    },
-    {
-        "prato": "Com sorvete aɞesanal de baunilha.",
-        "tags": [
-            "nata"
-        ]
-    },
-    {
-        "prato": "mousse de queijo, calda de goiaba, queijo de",
-        "tags": []
-    },
-    {
-        "prato": "Sorvete aɞesanal de cappuccino cobeɞo com",
-        "tags": []
-    },
-    {
-        "prato": "calda de café e crocante de cacau.",
-        "tags": [
-            "naked de ninho"
-        ]
-    },
-    {
-        "prato": "Toɞa de chocolate em camadas alternadas com",
-        "tags": []
-    },
-    {
-        "prato": "chocolate e sorvete aɞesanal de baunilha.",
-        "tags": []
-    },
-    {
-        "prato": "sorvete aɞesanal de avelã, calda de chocolate e",
-        "tags": []
-    },
-    {
-        "prato": "MIL FOLHAS DE DOCE DE LEITE    29",
-        "tags": []
-    },
-    {
-        "prato": "leite e servida com sorvete aɞesanal de baunilha.",
-        "tags": [
-            "r$"
-        ]
-    },
-    {
-        "prato": "CREME DE PAPAYA    29",
-        "tags": []
-    },
-    {
-        "prato": "SORVETE ARTESANAL    18",
-        "tags": [
-            "nata",
-            "avelã"
-        ]
-    },
-    {
-        "prato": "tapioca.",
-        "tags": [
-            "brownie vegano"
-        ]
-    },
-    {
-        "prato": "Brownie de cacau com massa de jerimum. Acompanha",
-        "tags": [
-            "cocadinha cremosa"
-        ]
-    },
-    {
-        "prato": "MOUSSE DIET    23",
-        "tags": []
-    },
-    {
-        "prato": "chocolate cobeɞos com castanhas.",
-        "tags": []
-    },
-    {
-        "prato": "Acompanha calda de chocolate e amêndoas.",
-        "tags": [
-            "cocada maria bonita"
-        ]
-    },
-    {
-        "prato": "Cocada cremosa ao forno, servida com sorvete aɞesanal",
-        "tags": [
-            "acompanha"
-        ]
-    },
-    {
-        "prato": "maracujá.",
-        "tags": []
-    },
-    {
-        "prato": "Sorvete aɞesanal de morango adoçado com stevia.",
-        "tags": []
-    },
-    {
-        "prato": "cafezinho, 2 ou 4 unidades de tubinhos crocantes feitos",
-        "tags": []
-    },
-    {
-        "prato": "ou doce de leite salgado com crocante de amendoim.",
-        "tags": [
-            "camarões"
-        ]
-    },
-    {
-        "prato": "Banana assada, ganache de chocolate branco e castanha",
-        "tags": []
-    },
-    {
-        "prato": "manteiga, com sorvete de baunilha e toque de canela.",
-        "tags": [
-            "stella artois"
-        ]
-    },
-    {
-        "prato": "STELLA ARTOIS  16,00",
-        "tags": [
-            "heineken"
-        ]
-    },
-    {
-        "prato": "cervejas",
-        "tags": [
-            "heineken zero"
-        ]
-    },
-    {
-        "prato": "Turva, frutada e macia, Essa Hazy IPA tem aromas",
-        "tags": []
-    },
-    {
-        "prato": "médio. Apresenta uma complexidade única por ter",
-        "tags": []
-    },
-    {
-        "prato": "harmonização é ampla. Possui 6,2% de ABV.",
-        "tags": []
-    },
-    {
-        "prato": "Clássica IPA, levemente alaranjada, com corpo",
-        "tags": []
-    },
-    {
-        "prato": "pasteurizada, preserva um aroma explosivo, cítrico,",
-        "tags": []
-    },
-    {
-        "prato": "em sua receita. Possui 6,5% de ABV. Harmoniza",
-        "tags": []
-    },
-    {
-        "prato": "28,00",
-        "tags": []
-    },
-    {
-        "prato": "cerveja",
-        "tags": [
-            "camarões"
-        ]
-    },
-    {
-        "prato": "Pilsen clássica, que utiliza técnicas tradicionais e",
-        "tags": []
-    },
-    {
-        "prato": "complexidade e a elegância comum ao estilo.",
-        "tags": []
-    },
-    {
-        "prato": "cardápio e com a alegria do nosso povo. Possui",
-        "tags": [
-            "abv"
-        ]
-    },
-    {
-        "prato": "Valores expressos em reais (R$)",
-        "tags": []
-    },
-    {
-        "prato": "drinks",
-        "tags": []
-    },
-    {
-        "prato": "doses",
-        "tags": []
-    },
-    {
-        "prato": "17,50",
-        "tags": []
-    },
-    {
-        "prato": "29,00",
-        "tags": []
-    },
-    {
-        "prato": "48,00",
-        "tags": []
-    },
-    {
-        "prato": "26,00",
-        "tags": []
-    },
-    {
-        "prato": "29,00",
-        "tags": []
-    },
-    {
-        "prato": "10,00",
-        "tags": []
-    },
-    {
-        "prato": "10,00",
-        "tags": []
-    },
-    {
-        "prato": "JACK DANIEL'S",
-        "tags": []
-    },
-    {
-        "prato": "26,00",
-        "tags": [
-            "vodka"
-        ]
-    },
-    {
-        "prato": "29,00",
-        "tags": [
-            "vodka"
-        ]
-    },
-    {
-        "prato": "29,50",
-        "tags": [
-            "vodka"
-        ]
-    },
-    {
-        "prato": "29,00",
-        "tags": [
-            "vodka"
-        ]
-    },
-    {
-        "prato": "28,00",
-        "tags": [
-            "vodka"
-        ]
-    },
-    {
-        "prato": "24,50",
-        "tags": [
-            "cachaça prata"
-        ]
-    },
-    {
-        "prato": "CAIPIRINHA (cachaça e limão)",
-        "tags": []
-    },
-    {
-        "prato": "CAIPIROSCA (vodka nacional e limão)",
-        "tags": []
-    },
-    {
-        "prato": "CAIPIFRUTA (vodka nacional)",
-        "tags": []
-    },
-    {
-        "prato": "Cajá | Caju | Kiwi | Limão | Maracujá | Morango | Seriguela/sazonal",
-        "tags": []
-    },
-    {
-        "prato": "36,&T CAMARÕES",
-        "tags": [
-            "gin",
-            "bahia"
-        ]
-    },
-    {
-        "prato": "com canela",
-        "tags": []
-    },
-    {
-        "prato": "Gin, tônica, limão",
-        "tags": []
-    },
-    {
-        "prato": "Gin, Monin de toranja, morango, espuma de cajá",
-        "tags": []
-    },
-    {
-        "prato": "Campari, vermouth tinto, gin",
-        "tags": []
-    },
-    {
-        "prato": "Rum, suco de limão, água com gás, xarope de açúcar, hoɞelã",
-        "tags": [
-            "lillet blanc"
-        ]
-    },
-    {
-        "prato": "COQUETEL TROPICAL/SEM ÁLCOOL",
-        "tags": []
-    },
-    {
-        "prato": "Vodka, calda de morango, suco tropical (cajá, maracujá e caju),",
-        "tags": []
-    },
-    {
-        "prato": "VIOLETA/SEM ÁLCOOL",
-        "tags": []
-    },
-    {
-        "prato": "Suco de limão, tônica, hoɞelã, limão, infusão de laranja com canela",
-        "tags": []
-    },
-    {
-        "prato": "29,00",
-        "tags": [
-            "whiskey"
-        ]
-    },
-    {
-        "prato": "tostada",
-        "tags": []
-    },
-    {
-        "prato": "Cachaça, suco cítrico, manjericão, xarope de açúcar. Finalizado na",
-        "tags": []
-    },
-    {
-        "prato": "26,00",
-        "tags": [
-            "vodka"
-        ]
-    },
-    {
-        "prato": "31,00",
-        "tags": [
-            "angostura biɠer",
-            "monin",
-            "rum"
-        ]
-    },
-    {
-        "prato": "xarope de açúcar, hoɞelã",
-        "tags": []
-    },
-    {
-        "prato": "COQUETEL TROPICAL/COM ÁLCOOL",
-        "tags": []
-    },
-    {
-        "prato": "36,00",
-        "tags": []
-    },
-    {
-        "prato": "nossas",
-        "tags": [
-            "caipis"
-        ]
-    },
-    {
-        "prato": "CAIPIFRUTA (vodka impoɠada)",
-        "tags": []
-    },
-    {
-        "prato": "licores",
-        "tags": [
-            "baileys"
-        ]
-    },
-    {
-        "prato": "AMARULA 30,00",
-        "tags": [
-            "frangelico"
-        ]
-    },
-    {
-        "prato": "CUARENTA Y TRES 36,00",
-        "tags": [
-            "cointreau"
-        ]
-    },
-    {
-        "prato": "10,50",
-        "tags": [
-            "água mineral"
-        ]
-    },
-    {
-        "prato": "10,50",
-        "tags": []
-    },
-    {
-        "prato": "12,,00",
-        "tags": [
-            "abacaxi",
-            "cajá |"
-        ]
-    },
-    {
-        "prato": "Limão | Maracujá | Morango | Uva | Laranja com",
-        "tags": [
-            "limonada suíça"
-        ]
-    },
-    {
-        "prato": "19,50",
-        "tags": []
-    },
-    {
-        "prato": "ÁGUA MINERAL/COM GÁS",
-        "tags": [
-            "jarra"
-        ]
-    },
-    {
-        "prato": "Café encorpado e marcante, com notas de chocolate e caramelo.",
-        "tags": [
-            "intensidade 7"
-        ]
-    },
-    {
-        "prato": "Café Especial equilibrado, com notas adocicadas e cítricas.",
-        "tags": [
-            "intensidade 6"
-        ]
-    },
-    {
-        "prato": "Com teor máximo de 0,1% de cafeína, este é um café delicado,",
-        "tags": []
-    },
-    {
-        "prato": "Intensidade 3",
-        "tags": [
-            "cappuccino vegano"
-        ]
-    },
-    {
-        "prato": "bebidas",
-        "tags": []
-    },
-    {
-        "prato": "Do cultivo à xícara, os detalhes em cada etapa garantem",
-        "tags": []
-    },
-    {
-        "prato": "espressos TRES.",
-        "tags": []
-    },
-    {
-        "prato": "Orgânico, zero leite, zero colesterol, zero glúten",
-        "tags": []
-    },
-    {
-        "prato": "Caju com Hoɞelã | Manga com Gengibre",
-        "tags": [
-            "frutas vermelhas"
-        ]
-    },
-    {
-        "prato": "Natal/RN",
-        "tags": [
-            "camarões"
-        ]
-    },
-    {
-        "prato": "Ponta Negra",
-        "tags": [
-            "av. engenheiro robeɞo freire"
-        ]
-    },
-    {
-        "prato": "Camarões Potiguar",
-        "tags": [
-            "ponta negra"
-        ]
-    },
-    {
-        "prato": "Rua Pedro Fonseca Filho, 8887",
-        "tags": [
-            "midway mall",
-            "camarões"
-        ]
-    },
-    {
-        "prato": "Terceiro Piso ‑ Midway Mall",
-        "tags": [
-            "tirol",
-            "av. nevaldo rocha"
-        ]
-    },
-    {
-        "prato": "Camarões Natal Shopping",
-        "tags": [
-            "natal shopping",
-            "praça de alimentação"
-        ]
-    },
-    {
-        "prato": "Av. Senador Salgado Filho, 2234 ‑ Candelária",
-        "tags": [
-            "@camaroesnatal"
-        ]
-    },
-    {
-        "prato": "camaroes.com.br",
-        "tags": []
     }
-]
+}
