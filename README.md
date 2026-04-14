@@ -63,10 +63,11 @@ Além das imagens estáticas, disponibilizamos versões interativas dos grafos p
 
 Clique nos links abaixo para explorar os grafos de similaridade de forma dinâmica:
 
-* [🔗 Grafo Interativo: Entradas](https://Arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_entradas.html)
-* [🔗 Grafo Interativo: Saladas](https://Arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_saladas.html)
-* [🔗 Grafo Interativo: Pratos Principais](https://Arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_pratos_principais.html)
-* [🔗 Grafo Interativo: Sobremesas](https://Arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_sobremesas.html)
+
+* [🔗 Entradas](https://arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_entradas.html)
+* [🔗 Saladas](https://arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_saladas.html)
+* [🔗 Pratos Principais](https://arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_pratos_principais.html)
+* [🔗 Sobremesas](https://arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_sobremesas.html)
 
 
 ---
