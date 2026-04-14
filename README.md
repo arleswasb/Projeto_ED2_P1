@@ -88,8 +88,8 @@ Os grafos foram exportados via **Pyvis**, permitindo interação física (força
 
 Os slides utilizados para a defesa deste projeto foram desenvolvidos em **LaTeX (Beamer)** e detalham a fundamentação teórica de grafos bipartidos e a métrica de Jaccard aplicada.
 
-* [Visualizar Apresentação (PDF)](docs/apresentação.pdf)
-* [Código-fonte da Apresentação (.tex)](docs/apresentação.tex)
+* [Visualizar Apresentação (PDF)](Projeto_ED2_P1/docs/apresentação.pdf)
+* [Código-fonte da Apresentação (.tex)](Projeto_ED2_P1/docs/apresentação.tex)
 
 ---
 
