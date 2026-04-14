@@ -1,93 +1,99 @@
+Compreendido. Para uma apresentação acadêmica na disciplina de **Estrutura de Dados 2**, o rigor conceitual é fundamental. O professor Ivanovitch certamente avaliará como você justifica as escolhas de modelagem (por que usar grafos?) e a manipulação da complexidade (por que subgrafos?).
 
+Aqui está a versão expandida e detalhada, focada na **explanação de conceitos**, ideal para o seu repositório ser usado como base para a sua apresentação:
 
-# Projeto Unidade 1: Grafos de Co-ocorrência Gastronômica (NLP + ED2)
+---
 
-Este repositório contém o desenvolvimento do primeiro trabalho prático da disciplina de **Estrutura de Dados 2 (UFRN)**. O projeto aplica algoritmos de grafos e técnicas de **Reconhecimento de Entidades Nomeadas (NER)** para mapear a inteligência de dados por trás de cardápios de alta gastronomia.
+# Grafos de Co-ocorrência Gastronômica: Camarões vs Coco Bambu
+
+Este projeto aplica algoritmos de **Teoria dos Grafos** e **Processamento de Linguagem Natural (NLP)** para comparar as estruturas técnicas de cardápios de dois grandes ícones da gastronomia nordestina. Desenvolvido para a disciplina de **Estrutura de Dados 2 (UFRN)**.
 
 ## Escopo e Objetivos
-O objetivo central é transformar descrições textuais não estruturadas em uma estrutura de dados de Grafo. Através desta modelagem, buscamos analisar a conectividade entre ingredientes, técnicas de preparo e perfis de consumo, realizando uma comparação transregional entre os restaurantes:
+O objetivo central é transformar descrições textuais não estruturadas em uma estrutura de dados de Grafo. Através desta modelagem, buscamos analisar a conectividade entre ingredientes, realizando uma comparação transregional entre os restaurantes:
 * **Camarões (Ponta Negra, Natal/RN)**: Baseado no arquivo `Cardapio+Ponta+Negra.pdf`.
 * **Coco Bambu (Fortaleza/CE)**: Baseado em extração dinâmica via console do *Live Menu*.
 
 ---
 
-## Organização do Repositório
-Para viabilizar a análise comparativa, os dados estão organizados nas seguintes pastas:
-* `data/camaroes_ponta_negra/`: Contém o PDF original, o arquivo sujo `menu_cm.txt` e o arquivo limpo camaroes_limpo.txt.
-* `data/coco_bambu/`: Contém o arquivo `menu_cb.txt` extraído da web e o arquivo limpo `cocobambu_limpo.txt`.
-* `data/processados/`: Armazena os resultados estruturados em JSON (`ner_camaroes.json` e `ner_cocobambu.json`) e a matriz de adjacencia.csv
-* `data/imagens/`: Tem as exportações de imagens estáticas (PNG) dos grafos gerados.
-* `data/visualizacoes_interativas/`: Contém os mapas interativos em formato HTML (Pyvis).
-* `src/`: Contém o notebook `proc_grafos_gen.ipynb` com todo o pipeline de execução.
+## Organização do Projeto
+
+A estrutura foi desenhada para garantir a separação entre dados brutos, processados e saídas visuais:
+
+* `data/processados/`: Arquivos JSON estruturados após a etapa de NER (Named Entity Recognition).
+* `data/imagens/`: Exportações estáticas (PNG) de alta resolução dos grafos.
+* `data/matriz_adj/`: Matrizes de adjacência (CSV) geradas por categoria.
+* `data/visualizacoes_interativas/`: Mapas dinâmicos em HTML.
+* `src/`: Notebooks Jupyter contendo o pipeline de execução e modelagem.
 
 ---
 
-## Detalhamento das Tags (NER)
-A extração de informações categoriza os termos dos cardápios para dar semântica aos nós do grafo:
+## Metodologia e Conceitos de Estrutura de Dados
 
-| TAG | Descrição | Exemplos no Projeto |
+### 1. Modelagem de Dados (Grafo Bipartido)
+A estrutura fundamental é um **Grafo Bipartido** $G = (U, V, E)$, onde os vértices são divididos em dois conjuntos disjuntos:
+* **Conjunto $P$ (Pratos)**: Vértices que representam a entidade final do cardápio.
+* **Conjunto $I$ (Ingredientes)**: Vértices que representam os componentes atômicos.
+* **Arestas ($E$)**: Uma conexão $e = \{p, i\}$ existe se, e somente se, o ingrediente $i$ compõe o prato $p$. Não existem conexões diretas entre dois pratos ou entre dois ingredientes nesta camada.
+
+### 2. Estratégia de Subgrafos e Redução de Ruído
+Para a disciplina de ED2, a eficiência visual e a densidade do grafo são críticas. Utilizamos a técnica de **Subgrafos Induzidos** para:
+* **Isolamento por Contexto**: Divisão em Macro-Categorias (Entradas, Principais, etc.) para reduzir o *clutter* (poluição visual) e permitir análises de nicho.
+* **Filtragem de Nós Isolados**: Remoção de ingredientes de grau 1 (que aparecem em apenas um prato), focando nos **Hubs de Conectividade** que realmente definem a similaridade entre os restaurantes.
+
+### 3. Métrica de Similaridade (Índice de Jaccard)
+Utilizamos o Coeficiente de Jaccard para medir a similaridade entre as vizinhanças dos nós de pratos. Para dois pratos $A$ e $B$, a similaridade é a razão entre o número de ingredientes comuns e o total de ingredientes únicos combinados:
+$$J(A,B) = \frac{|N(A) \cap N(B)|}{|N(A) \cup N(B)|}$$
+*Onde $N(x)$ representa o conjunto de vizinhos do nó $x$.*
+
+---
+
+## Plano de Ação e Desenvolvimento
+
+### 1. Preparação e Coleta (Ingestão de Dados)
+* **a) Parsing de PDF (Camarões)**: Extração de texto bruto tratada para lidar com quebras de linha e segmentação.
+* **b) Captura Dinâmica (Coco Bambu)**: Extração via console JS para capturar o DOM renderizado, contornando proteções de sites dinâmicos.
+* **c) Normalização via LLM**: Uso de Gemini para realizar o NER, garantindo que "Camarão Médio" e "Camarão Grelhado" fossem normalizados para o nó central "Camarão".
+
+### 2. Detalhamento das Macro-Categorias
+A análise foi segmentada para extrair semânticas específicas de cada etapa da experiência gastronômica:
+* **Entradas**: Avalia a similaridade em petiscos e "finger foods".
+* **Pratos Principais**: Onde reside a maior densidade de dados e as proteínas base (Camarão, Peixe, Carne).
+* **Saladas**: Foco em frescor e ingredientes vegetais.
+* **Sobremesas**: Identifica a convergência em bases de confeitaria (Ninho, Nutella, Frutas).
+
+### 3. Detalhamento das Tags (NER)
+| TAG | Função no Grafo | Descrição Técnica |
 | :--- | :--- | :--- |
-| **`PRATO`** | Identificador único do prato para análise de similaridade. | Camarão Internacional, Filé à Parmegiana. |
-| **`ING`** | Ingredientes base da receita (Nós centrais). | Camarão, Carne de Sol, Peixe, Bacalhau. |
-| **`ACOMP`** | Guarnições e acompanhamentos. | Arroz de Leite, Batata Palha, Baião de Dois. |
+| **`PRATO`** | Nó de Origem | Vértice âncora para a análise de similaridade. |
+| **`ING`** | Nó Central (Hub) | Vértices "ponte" que conectam os dois restaurantes através da vizinhança comum. |
 
 ---
 
-## Metodologia e Plano de Ação
+## Visualização Interativa (GitHub Pages)
 
-### 1. Preparação e Coleta
-Conversão de dados não estruturados em formatos processáveis:
-* **Parsing de PDF (Camarões):**: Extração de texto bruto do arquivo Cardapio+Ponta+Negra.pdf.
-* **Captura Dinâmica (Coco Bambu):**: Extração de dados via console do navegador para contornar a renderização dinâmica do Live Menu.
-* **Evolução do Pipeline:)**: Aplicação de um pipeline de LLM-based Extraction, permitindo lidar com a variabilidade de descrições literárias dos cardápios.
+Os grafos foram exportados via **Pyvis**, permitindo interação física (força de molas) para explorar a topologia da rede:
 
-### 2. Reconhecimento de Entidades (NER)
-Transformação das descrições literárias em categorias formais utilizando 
-* **Extração via IA Generativa:**: Utilização de modelos de linguagem (Gemini) para realizar o Reconhecimento de Entidades Nomeadas (NER) de forma contextual. Isso permitiu separar com precisão o que é Nome do Prato, Descrição Narrativa e a lista atômica de Ingredientes.
-* **Normalização de Dados:**: Garantia de que ingredientes idênticos em ambos os restaurantes (ex: "Nata" vs "Nata Fresca") fossem mapeados para o mesmo identificador de nó, viabilizando o cálculo de similaridade.
-* **Persistência em JSON:**: Os dados foram exportados para arquivos JSON estruturados, servindo como input para a biblioteca NetworkX.
-
-### 3. Análise de Grafos e Similaridade Gastronômica
-* **Modelagem de Grafo Bipartido:** Construção de uma rede onde Pratos e Ingredientes são nós distintos, permitindo mapear a composição de cada receita.
-* **Mapeamento de Similaridade (Jaccard):** Aplicação do Índice de Jaccard para comparar pratos homônimos com base na vizinhança de seus ingredientes (Common Neighbors).
-* **Destaques Visuais:** O pipeline destaca automaticamente os "Ingredientes Comuns" (shared hubs) nas visualizações, utilizando arestas coloridas para evidenciar a similaridade transregional entre Camarões e Coco Bambu.
+* [**📍 Mapa de Entradas**](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_entradas.html)
+* [**📍 Mapa de Saladas**](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_saladas.html)
+* [**📍 Mapa de Pratos Principais**](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_pratos_principais.html)
+* [**📍 Mapa de Sobremesas**](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_sobremesas.html)
 
 
 
 ---
 
-## Visualização Interativa (Pyvis)
-Além das imagens estáticas, disponibilizamos versões interativas dos grafos para exploração dinâmica (zoom, arraste e detalhes ao passar o mouse).
+## Guia de Execução
 
-## 🗺️ Visualização Interativa (GitHub Pages)
-
-Clique nos links abaixo para explorar os grafos de similaridade de forma dinâmica:
-
-
-* [🔗 Entradas](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_entradas.html)
-* [🔗 Saladas](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_saladas.html)
-* [🔗 Pratos Principais](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_pratos_principais.html)
-* [🔗 Sobremesas](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_sobremesas.html)
-
----
-
-## Guia de Execução: Passo a Passo
-
-1.  **Ambiente**: Ativar o ambiente virtual e instalar as dependências (`pip install networkx spacy pymupdf matplotlib scipy pyvis`).
-2.  **Processamento NER**: Executar o pipeline de extração via LLM/NER para converter os cardápios em JSON estruturado (armazenados em `data/processados/`).
-3.  **Análise e Exportação**: Rodar o notebook `src/proc_grafos_gen.ipynb`. O pipeline irá realizar automaticamente:
-    *   O cálculo de similaridade entre os menus.
-    *   A exportação de imagens estáticas (PNG) de alta resolução para `data/imagens/`.
-    *   A geração de mapas interativos (HTML) para `data/visualizacoes_interativas/`.
-5. As instruções detalhadas constam no pdf anexo.
+1.  **Ambiente**: Instalar dependências: `pip install networkx matplotlib scipy pyvis pandas`.
+2.  **Execução**: Rodar o notebook `src/proc_grafos_gen.ipynb`. O script gerará as matrizes de adjacência CSV, que são a representação tabular do grafo, essenciais para auditoria dos dados.
+3.  **Análise**: Os resultados no console do notebook exibirão os Top 5 pratos com maior similaridade técnica entre Natal e Fortaleza.
 
 ---
 
 ## Identificação
 
-**Universidade**: Universidade Federal do Rio Grande do Norte (UFRN)
-**Disciplina**: DCA3304 - Estrutura de Dados II
-**Professor**: Prof. Dr. Ivanovitch Medeiros Dantas da Silva
+**UFRN - DCA3304 - Estrutura de Dados II**
+**Professor**: Dr. Ivanovitch Medeiros Dantas da Silva  
 
 **Alunos**:
 * Werber Arles de Souza Barradas (@Arleswasb)
