@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Gelato De Cookies And Cream", "label": "Gelato De Cookies And Cream", "shape": "dot", "size": 30}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Gelato De Pistache", "label": "Gelato De Pistache", "shape": "dot", "size": 30}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Gelato De Creme", "label": "Gelato De Creme", "shape": "dot", "size": 30}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Naked de Ninho", "label": "Naked de Ninho", "shape": "dot", "size": 30}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Brownie Vegano", "label": "Brownie Vegano", "shape": "dot", "size": 30}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Ta\u00e7a Tiramisu", "label": "Ta\u00e7a Tiramisu", "shape": "dot", "size": 30}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Cocada Maria Bonita", "label": "Cocada Maria Bonita", "shape": "dot", "size": 30}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Cocada Mole com Gelato de Coco", "label": "Cocada Mole com Gelato de Coco", "shape": "dot", "size": 30}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Macaron Petit com Sorvete de Avel\u00e3", "label": "Macaron Petit com Sorvete de Avel\u00e3", "shape": "dot", "size": 30}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Petit Gateau de Pistache", "label": "Petit Gateau de Pistache", "shape": "dot", "size": 30}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) S\u00f3 um Docinho", "label": "S\u00f3 um Docinho", "shape": "dot", "size": 30}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Ta\u00e7a Romeu e Julieta", "label": "Ta\u00e7a Romeu e Julieta", "shape": "dot", "size": 30}, {"color": "skyblue", "font": {"color": "black"}, "id": "(Camar\u00f5es) Petit Gateau de Chocolate", "label": "Petit Gateau de Chocolate", "shape": "dot", "size": 30}, {"color": "orange", "font": {"color": "black"}, "id": "(Coco Bambu) Gelato de queijo com Goiabada", "label": "Gelato de queijo com Goiabada", "shape": "dot", "size": 30}]);
+                  edges = new vis.DataSet([{"color": "#27ae60", "from": "(Coco Bambu) Gelato De Cookies And Cream", "title": "Similaridade: 100.00%", "to": "(Camar\u00f5es) Petit Gateau de Chocolate", "value": 15.0}, {"color": "#27ae60", "from": "(Coco Bambu) Gelato De Cookies And Cream", "title": "Similaridade: 50.00%", "to": "(Camar\u00f5es) Naked de Ninho", "value": 7.5}, {"color": "#27ae60", "from": "(Coco Bambu) Gelato De Pistache", "title": "Similaridade: 50.00%", "to": "(Camar\u00f5es) Petit Gateau de Pistache", "value": 7.5}, {"color": "#27ae60", "from": "(Coco Bambu) Gelato De Pistache", "title": "Similaridade: 50.00%", "to": "(Camar\u00f5es) S\u00f3 um Docinho", "value": 7.5}, {"color": "#27ae60", "from": "(Coco Bambu) Gelato De Creme", "title": "Similaridade: 50.00%", "to": "(Camar\u00f5es) Macaron Petit com Sorvete de Avel\u00e3", "value": 7.5}, {"color": "#27ae60", "from": "(Camar\u00f5es) Brownie Vegano", "title": "Similaridade: 50.00%", "to": "(Coco Bambu) Cocada Mole com Gelato de Coco", "value": 7.5}, {"color": "#27ae60", "from": "(Camar\u00f5es) Ta\u00e7a Tiramisu", "title": "Similaridade: 50.00%", "to": "(Coco Bambu) Gelato de queijo com Goiabada", "value": 7.5}, {"color": "#27ae60", "from": "(Camar\u00f5es) Cocada Maria Bonita", "title": "Similaridade: 50.00%", "to": "(Coco Bambu) Cocada Mole com Gelato de Coco", "value": 7.5}, {"color": "#27ae60", "from": "(Camar\u00f5es) Ta\u00e7a Romeu e Julieta", "title": "Similaridade: 50.00%", "to": "(Coco Bambu) Gelato de queijo com Goiabada", "value": 7.5}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.1,
+            "damping": 0.09,
+            "gravitationalConstant": -10000,
+            "springConstant": 0.1,
+            "springLength": 150
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
