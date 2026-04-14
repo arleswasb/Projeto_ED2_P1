@@ -1,0 +1,98 @@
+\documentclass[10pt]{beamer}
+\usetheme{metropolis}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\title{Grafos de Co-ocorrência Gastronômica}
+\subtitle{Análise Bipartida: Camarões vs Coco Bambu}
+\author{Werber Arles de Souza Barradas \and Nilton Fontes Barreto Neto}
+\institute{DCA3304 - Estrutura de Dados II \\ Universidade Federal do Rio Grande do Norte (UFRN)}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Introdução e Escopo}
+    \begin{itemize}
+        \item \textbf{Objetivo:} Comparar a estrutura técnica de cardápios transregionais.
+        \item \textbf{Fontes de Dados:}
+            \begin{itemize}
+                \item Camarões (Natal/RN): Parsing de PDF.
+                \item Coco Bambu (Fortaleza/CE): Extração via DOM/Console JS.
+            \end{itemize}
+        \item \textbf{Tecnologias:} Python, NetworkX, Pyvis e Gemini (NER).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Modelagem: Grafo Bipartido}
+    O sistema é modelado como um grafo $G = (P, I, E)$:
+    \begin{description}
+        \item[Vértices Pratos ($P$):] Representam os itens do cardápio.
+        \item[Vértices Ingredientes ($I$):] Representam os componentes atômicos.
+        \item[Arestas ($E$):] Conexão binária indicando que um ingrediente compõe o prato.
+    \end{description}
+    \vspace{0.5cm}
+    \textbf{Por que Bipartido?} Não existem conexões diretas $P \leftrightarrow P$ ou $I \leftrightarrow I$, permitindo focar na vizinhança comum para o cálculo de similaridade.
+\end{frame}
+
+\begin{frame}{Métrica: Índice de Jaccard}
+    A similaridade técnica entre dois pratos $u$ e $v$ é quantificada matematicamente:
+    \[ J(u,v) = \frac{|N(u) \cap N(v)|}{|N(u) \cup N(v)|} \]
+    \begin{itemize}
+        \item $N(u) \cap N(v)$: Ingredientes compartilhados (Interseção).
+        \item $N(u) \cup N(v)$: Repertório total de ingredientes (União).
+    \end{itemize}
+    \textbf{Aplicação:} Identificar pratos "espelhados" que, apesar de nomes diferentes, compartilham a mesma base técnica.
+\end{frame}
+
+\begin{frame}{Resultados: Categoria de Entradas}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \includegraphics[width=\textwidth]{similaridade_entradas.png}
+        \column{0.5\textwidth}
+        \small
+        \textbf{Análise Visual:}
+        \begin{itemize}
+            \item \textbf{Hubs:} Ingredientes centrais (ex: Camarão, Queijo Coalho).
+            \item \textbf{Arestas:} Espessura maior indica ingredientes com grau $d(v) > 2$.
+            \item \textbf{Cores:} Azul (Camarões) vs Laranja (Coco Bambu).
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Resultados: Pratos Principais}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \includegraphics[width=\textwidth]{similaridade_pratos_principais.png}
+        \column{0.5\textwidth}
+        \small
+        \textbf{Conclusões Técnicas:}
+        \begin{itemize}
+            \item Alta densidade de rede devido à base proteica comum.
+            \item Identificação de similaridades acima de 80\% em pratos tradicionais de camarão e arroz cremoso.
+            \item Visualização via \textit{Force-Directed Graph} (Pyvis).
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Exportação e Matrizes}
+    \begin{itemize}
+        \item \textbf{Representação Algébrica:} O grafo é convertido em matrizes de adjacência CSV.
+        \item \textbf{Fórmula da Matriz $A$:}
+        \[ A_{ij} = \begin{cases} 1 & \text{se existe conexão entre prato } i \text{ e ingrediente } j \\ 0 & \text{caso contrário} \end{cases} \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Considerações Finais}
+    \begin{itemize}
+        \item A combinação de NLP (Gemini) e Grafos (NetworkX) permitiu automatizar uma análise que seria exaustiva manualmente.
+        \item O projeto demonstra como estruturas de dados fundamentais (Grafos) explicam fenômenos comerciais e gastronômicos.
+        \item Repositório e Visualizações: \url{https://arleswasb.github.io/Projeto_ED2_P1/}
+    \end{itemize}
+\end{frame}
+
+\end{document}

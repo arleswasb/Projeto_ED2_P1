@@ -84,6 +84,15 @@ Os grafos foram exportados via **Pyvis**, permitindo interação física (força
 
 ---
 
+## 📢 Apresentação do Projeto
+
+Os slides utilizados para a defesa deste projeto foram desenvolvidos em **LaTeX (Beamer)** e detalham a fundamentação teórica de grafos bipartidos e a métrica de Jaccard aplicada.
+
+* [Visualizar Apresentação (PDF)](docs/apresentação.pdf)
+* [Código-fonte da Apresentação (.tex)](docs/apresentação.tex)
+
+---
+
 ## Identificação
 
 **UFRN - DCA3304 - Estrutura de Dados II**
