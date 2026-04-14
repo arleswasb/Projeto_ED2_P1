@@ -16,7 +16,7 @@ A estrutura foi desenhada para garantir a separação entre dados brutos, proces
 * `data/processados/`: Arquivos JSON estruturados após a etapa de NER (Named Entity Recognition).
 * `data/imagens/`: Exportações estáticas (PNG) de alta resolução dos grafos.
 * `data/matriz_adj/`: Matrizes de adjacência (CSV) geradas por categoria.
-* `data/visualizacoes_interativas/`: Mapas dinâmicos em HTML.
+* `data/visualizacoes_interativas/`: Mapas dinâmicos em HTML (Grafos Bipartidos e Projeções).
 * `src/`: Notebooks Jupyter contendo o pipeline de execução e modelagem.
 
 ---
@@ -27,92 +27,43 @@ A estrutura foi desenhada para garantir a separação entre dados brutos, proces
 A estrutura fundamental é um **Grafo Bipartido** $G = (U, V, E)$, onde os vértices são divididos em dois conjuntos disjuntos:
 * **Conjunto $P$ (Pratos)**: Vértices que representam a entidade final do cardápio.
 * **Conjunto $I$ (Ingredientes)**: Vértices que representam os componentes atômicos.
-* **Arestas ($E$)**: Uma conexão $e = \{p, i\}$ existe se, e somente se, o ingrediente $i$ compõe o prato $p$. Não existem conexões diretas entre dois pratos ou entre dois ingredientes nesta camada.
+* **Arestas ($E$)**: Uma conexão $e = \{p, i\}$ existe se, e somente se, o ingrediente $i$ compõe o prato $p$.
 
-### 2. Estratégia de Subgrafos e Redução de Ruído
-Para a disciplina de ED2, a eficiência visual e a densidade do grafo são críticas. Utilizamos a técnica de **Subgrafos Induzidos** para:
-* **Isolamento por Contexto**: Divisão em Macro-Categorias (Entradas, Principais, etc.) para reduzir o *clutter* (poluição visual) e permitir análises de nicho.
-* **Filtragem de Nós Isolados**: Remoção de ingredientes de grau 1 (que aparecem em apenas um prato), focando nos **Hubs de Conectividade** que realmente definem a similaridade entre os restaurantes.
+### 2. Projeção de Similaridade (One-Mode Projection)
+Para sintetizar os resultados, aplicamos uma **Projeção Monopartida**. Nesta camada, os ingredientes são omitidos e os pratos são conectados diretamente entre si.
+* **Filtro de Significância**: Apenas pratos com **Índice de Jaccard $\ge 0.50$** são mantidos na visualização de projeção.
 
 ### 3. Métrica de Similaridade (Índice de Jaccard)
-Utilizamos o Coeficiente de Jaccard para medir a similaridade entre as vizinhanças dos nós de pratos. Para dois pratos $A$ e $B$, a similaridade é a razão entre o número de ingredientes comuns e o total de ingredientes únicos combinados:
+Utilizamos o Coeficiente de Jaccard para medir a similaridade entre as vizinhanças dos nós de pratos:
 
 $$J(A,B) = \frac{|N(A) \cap N(B)|}{|N(A) \cup N(B)|}$$
 
-*Onde $N(x)$ representa o conjunto de vizinhos do nó $x$.*
+---
+
+## Resultados e Visualizações Unificadas
+
+Abaixo apresentamos o acesso consolidado a todos os artefatos gerados pelo pipeline. As **Visualizações Interativas (HTML)** permitem explorar a topologia da rede através de forças de mola, enquanto os **Snapshots (PNG)** fornecem registros estáticos de alta resolução para o relatório técnico.
+
+| Categoria | Estrutura (Bipartido) | Similaridade (Projeção) | Matriz de Adjacência |
+| :--- | :---: | :---: | :---: |
+| **Entradas** | [HTML](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_entradas.html) / [PNG](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_entradas.png) | [HTML](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/projecao_entradas.html) / [PNG](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/projecao_entradas.png) | [CSV](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_entradas.csv) |
+| **Pratos Principais** | [HTML](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_pratos_principais.html) / [PNG](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_pratos_principais.png) | [HTML](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/projecao_pratos_principais.html) / [PNG](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/projecao_pratos_principais.png) | [CSV](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_principais.csv) |
+| **Saladas** | [HTML](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_saladas.html) / [PNG](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_saladas.png) | [HTML](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/projecao_saladas.html) / [PNG](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/projecao_saladas.png) | [CSV](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_saladas.csv) |
+| **Sobremesas** | [HTML](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_sobremesas.html) / [PNG](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_sobremesas.png) | [HTML](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/projecao_sobremesas.html) / [PNG](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/projecao_sobremesas.png) | [CSV](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_sobremesas.csv) |
+
+> **Dica de Explanação:** As arestas verdes nas projeções representam similaridade $J \ge 0.50$, evidenciando os "matches" diretos entre os cardápios.
 
 ---
 
-## Plano de Ação e Desenvolvimento
+## Guia de Execução e Apresentação
 
-### 1. Preparação e Coleta (Ingestão de Dados)
-* **a) Parsing de PDF (Camarões)**: Extração de texto bruto tratada para lidar com quebras de linha e segmentação.
-* **b) Captura Dinâmica (Coco Bambu)**: Extração via console JS para capturar o DOM renderizado, contornando proteções de sites dinâmicos.
-* **c) Normalização via LLM**: Uso de Gemini para realizar o NER, garantindo que "Camarão Médio" e "Camarão Grelhado" fossem normalizados para o nó central "Camarão".
-
-### 2. Detalhamento das Macro-Categorias
-A análise foi segmentada para extrair semânticas específicas de cada etapa da experiência gastronômica:
-* **Entradas**: Avalia a similaridade em petiscos e "finger foods".
-* **Pratos Principais**: Onde reside a maior densidade de dados e as proteínas base (Camarão, Peixe, Carne).
-* **Saladas**: Foco em frescor e ingredientes vegetais.
-* **Sobremesas**: Identifica a convergência em bases de confeitaria (Ninho, Nutella, Frutas).
-
-### 3. Detalhamento das Tags (NER)
-| TAG | Função no Grafo | Descrição Técnica |
-| :--- | :--- | :--- |
-| **`PRATO`** | Nó de Origem | Vértice âncora para a análise de similaridade. |
-| **`ING`** | Nó Central (Hub) | Vértices "ponte" que conectam os dois restaurantes através da vizinhança comum. |
-
----
-
-## Visualização Interativa (GitHub Pages)
-
-Os grafos foram exportados via **Pyvis**, permitindo interação física (força de molas) para explorar a topologia da rede:
-
-* [**📍 Mapa de Entradas**](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_entradas.html)
-* [**📍 Mapa de Saladas**](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_saladas.html)
-* [**📍 Mapa de Pratos Principais**](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_pratos_principais.html)
-* [**📍 Mapa de Sobremesas**](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_sobremesas.html)
-
----
-
-## Resultados e Evidências Visuais
-
-Abaixo estão os snapshots estáticos gerados pelo pipeline para cada macro-categoria. Estas imagens destacam a conectividade regional através dos ingredientes compartilhados (hubs).
-
-| Categoria | Snapshot Estático (PNG) | Matriz de Adjacência (CSV) |
-| :--- | :--- | :--- |
-| **Entradas** | [Ver Grafo](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_entradas.png) | [Ver Matriz](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_entradas.csv) |
-| **Pratos Principais** | [Ver Grafo](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_pratos_principais.png) | [Ver Matriz](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_principais.csv) |
-| **Saladas** | [Ver Grafo](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_saladas.png) | [Ver Matriz](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_saladas.csv) |
-| **Sobremesas** | [ Ver Grafo](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_sobremesas.png) | [ Ver Matriz](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_sobremesas.csv) |
-
-> **Dica de Explanação:** Ao abrir os PNGs, observe as arestas em cinza escuro; elas representam ingredientes com alto grau de conectividade ($d(v) > 2$), provando a convergência técnica entre os menus de Natal e Fortaleza.
-
----
-
-## Guia de Execução
-
-1.  **Ambiente**: Instalar dependências: `pip install networkx matplotlib scipy pyvis pandas`.
-2.  **Execução**: Rodar o notebook `src/proc_grafos_gen.ipynb`. O script gerará as matrizes de adjacência CSV, que são a representação tabular do grafo, essenciais para auditoria dos dados.
-3.  **Análise**: Os resultados no console do notebook exibirão os Top 5 pratos com maior similaridade técnica entre Natal e Fortaleza.
-
----
-
-## 📢 Apresentação do Projeto
-
-Os slides utilizados para a defesa deste projeto foram desenvolvidos em **LaTeX (Beamer)** e detalham a fundamentação teórica de grafos bipartidos e a métrica de Jaccard aplicada.
-
-** [Visualizar Apresentação (PDF)](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/docs/apresentacao.pdf)
-* [Código-fonte da Apresentação (.tex)](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/docs/apresentacao.tex)
+1.  **Execução**: Instalar dependências e rodar `src/proc_grafos_gen.ipynb`.
+2.  **Slides (LaTeX)**: Detalham a fundamentação teórica.
+    * [Visualizar Apresentação (PDF)](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/docs/apresentacao.pdf) | [Código-fonte (.tex)](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/docs/apresentacao.tex)
 
 ---
 
 ## Identificação
-
 **UFRN - DCA3304 - Estrutura de Dados II**
-**Professor**: Dr. Ivanovitch Medeiros Dantas da Silva  
-
-**Alunos**:
-* Werber Arles de Souza Barradas (@Arleswasb)
-* Nilton Fontes Barreto Neto
+**Professor**: Dr. Ivanovitch Medeiros Dantas da Silva
+**Alunos**: Werber Arles de Souza Barradas e Nilton Fontes Barreto Neto
