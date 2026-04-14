@@ -74,7 +74,20 @@ Os grafos foram exportados via **Pyvis**, permitindo interação física (força
 * [**📍 Mapa de Pratos Principais**](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_pratos_principais.html)
 * [**📍 Mapa de Sobremesas**](https://arleswasb.github.io/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_sobremesas.html)
 
+---
 
+## Resultados e Evidências Visuais
+
+Abaixo estão os snapshots estáticos gerados pelo pipeline para cada macro-categoria. Estas imagens destacam a conectividade regional através dos ingredientes compartilhados (hubs).
+
+| Categoria | Snapshot Estático (PNG) | Matriz de Adjacência (CSV) |
+| :--- | :--- | :--- |
+| **Entradas** | [Ver Grafo](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_entradas.png) | [Ver Matriz](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_entradas.csv) |
+| **Pratos Principais** | [Ver Grafo](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_pratos_principais.png) | [Ver Matriz](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_principais.csv) |
+| **Saladas** | [Ver Grafo](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_saladas.png) | [Ver Matriz](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_saladas.csv) |
+| **Sobremesas** | [ Ver Grafo](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/imagens/similaridade_sobremesas.png) | [ Ver Matriz](https://github.com/arleswasb/Projeto_ED2_P1/blob/main/data/matriz_adj/matriz_sobremesas.csv) |
+
+> **Dica de Explanação:** Ao abrir os PNGs, observe as arestas em cinza escuro; elas representam ingredientes com alto grau de conectividade ($d(v) > 2$), provando a convergência técnica entre os menus de Natal e Fortaleza.
 
 ---
 
