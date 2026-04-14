@@ -59,12 +59,15 @@ Transformação das descrições literárias em categorias formais utilizando
 ## Visualização Interativa (Pyvis)
 Além das imagens estáticas, disponibilizamos versões interativas dos grafos para exploração dinâmica (zoom, arraste e detalhes ao passar o mouse).
 
-> [!TIP]
-> Use os links abaixo para visualizar diretamente via GitHub (HTML Preview):
-> * [🗺️ Mapa Interativo: Entradas](https://htmlpreview.github.io/?https://github.com/Arleswasb/ED2_P1/blob/main/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_entradas.html)
-> * [🗺️ Mapa Interativo: Pratos Principais](https://htmlpreview.github.io/?https://github.com/Arleswasb/ED2_P1/blob/main/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_pratos_principais.html)
-> * [🗺️ Mapa Interativo: Saladas](https://htmlpreview.github.io/?https://github.com/Arleswasb/ED2_P1/blob/main/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_saladas.html)
-> * [🗺️ Mapa Interativo: Sobremesas](https://htmlpreview.github.io/?https://github.com/Arleswasb/ED2_P1/blob/main/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_sobremesas.html)
+## 🗺️ Visualização Interativa (GitHub Pages)
+
+Clique nos links abaixo para explorar os grafos de similaridade de forma dinâmica:
+
+* [🔗 Grafo Interativo: Entradas](https://Arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_entradas.html)
+* [🔗 Grafo Interativo: Saladas](https://Arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_saladas.html)
+* [🔗 Grafo Interativo: Pratos Principais](https://Arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_pratos_principais.html)
+* [🔗 Grafo Interativo: Sobremesas](https://Arleswasb.github.io/ED2_P1/Projeto_ED2_P1/data/visualizacoes_interativas/similaridade_sobremesas.html)
+
 
 ---
 
