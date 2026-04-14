@@ -1,9 +1,3 @@
-Compreendido. Para uma apresentação acadêmica na disciplina de **Estrutura de Dados 2**, o rigor conceitual é fundamental. O professor Ivanovitch certamente avaliará como você justifica as escolhas de modelagem (por que usar grafos?) e a manipulação da complexidade (por que subgrafos?).
-
-Aqui está a versão expandida e detalhada, focada na **explanação de conceitos**, ideal para o seu repositório ser usado como base para a sua apresentação:
-
----
-
 # Grafos de Co-ocorrência Gastronômica: Camarões vs Coco Bambu
 
 Este projeto aplica algoritmos de **Teoria dos Grafos** e **Processamento de Linguagem Natural (NLP)** para comparar as estruturas técnicas de cardápios de dois grandes ícones da gastronomia nordestina. Desenvolvido para a disciplina de **Estrutura de Dados 2 (UFRN)**.
