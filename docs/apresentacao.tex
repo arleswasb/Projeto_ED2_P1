@@ -6,11 +6,11 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 
-% Caminho das imagens (ajuste se necessário)
+% Configuração do caminho das imagens
 \graphicspath{{../data/imagens/}}
 
 \title{Grafos de Co-ocorrência Gastronômica}
-\subtitle{Análise Bipartida e Projeção de Similaridade}
+\subtitle{Análise Bipartida e Projeção de Similaridade: Camarões vs Coco Bambu}
 \author{Werber Arles de Souza Barradas \and Nilton Fontes Barreto Neto}
 \institute{DCA3304 - Estrutura de Dados II \\ Universidade Federal do Rio Grande do Norte (UFRN)}
 \date{\today}
@@ -21,30 +21,42 @@
 
 \begin{frame}{Introdução e Escopo}
     \begin{itemize}
-        \item \textbf{Objetivo:} Comparar a estrutura técnica de cardápios transregionais.
+        \item \textbf{Objetivo:} Comparar a estrutura técnica de cardápios de dois ícones da gastronomia nordestina.
         \item \textbf{Fontes de Dados:}
             \begin{itemize}
-                \item Camarões (Natal/RN): Parsing de PDF.
-                \item Coco Bambu (Fortaleza/CE): Extração via DOM/Console JS.
+                \item Camarões (Natal/RN): Extração via Parsing de PDF.
+                \item Coco Bambu (Fortaleza/CE): Extração dinâmica via DOM/Console JS.
             \end{itemize}
-        \item \textbf{Tecnologias:} Python, NetworkX, Pyvis e Gemini (NER).
+        \item \textbf{Stack Tecnológica:} Python, NetworkX, Pyvis e Gemini (NER para limpeza de dados).
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Metodologia: Projeção Monopartida}
-    Além do grafo bipartido, aplicamos a \textbf{One-Mode Projection}:
+\begin{frame}{Modelagem: Grafo Bipartido}
+    O sistema inicial é modelado como um grafo bipartido $G = (P, I, E)$:
+    \begin{description}
+        \item[Vértices Pratos ($P$):] Representam os itens finais do cardápio.
+        \item[Vértices Ingredientes ($I$):] Representam os componentes atômicos.
+        \item[Arestas ($E$):] Uma conexão binária indicando que um ingrediente compõe o prato.
+    \end{description}
+    \vspace{0.3cm}
+    \textbf{Vantagem Teórica:} A estrutura bipartida impede conexões diretas entre pratos, forçando a análise da vizinhança comum para determinar similaridade técnica.
+\end{frame}
+
+\begin{frame}{Métrica: Índice de Jaccard}
+    A similaridade entre dois pratos $u$ e $v$ é quantificada matematicamente para a geração das projeções:
+    \[ J(u,v) = \frac{|N(u) \cap N(v)|}{|N(u) \cup N(v)|} \]
     \begin{itemize}
-        \item \textbf{Redução de Ruído:} Ingredientes são omitidos para focar na afinidade direta entre pratos.
-        \item \textbf{Filtro de Significância:} Apenas conexões com Índice de Jaccard $J(u,v) \geq 0.50$ são mantidas.
-        \item \textbf{Visualização:} Pratos similares funcionam como "ímãs" no layout de forças, evidenciando clusters de convergência.
+        \item $N(u) \cap N(v)$: Ingredientes compartilhados (Interseção).
+        \item $N(u) \cup N(v)$: Repertório total de ingredientes (União).
     \end{itemize}
+    \textbf{Aplicação:} Identificar o "espelhamento" de receitas entre os restaurantes.
 \end{frame}
 
 \begin{frame}{Resultados: Categoria de Entradas}
     \begin{columns}
         \column{0.5\textwidth}
         \centering
-        \small Bipartido\\
+        \small Estrutura Bipartida\\
         \includegraphics[width=\textwidth]{similaridade_entradas.png}
         \column{0.5\textwidth}
         \centering
@@ -52,14 +64,14 @@
         \includegraphics[width=\textwidth]{projecao_entradas.png}
     \end{columns}
     \vspace{0.3cm}
-    \textbf{Destaque:} Identificação clara de pratos correspondentes (ex: Pastéis e Camarões empanados) através da eliminação de nós isolados.
+    \textbf{Análise:} A projeção limpa o ruído visual, mantendo apenas os pratos com alta paridade (ex: pastéis e camarões empanados).
 \end{frame}
 
 \begin{frame}{Resultados: Pratos Principais}
     \begin{columns}
         \column{0.5\textwidth}
         \centering
-        \small Bipartido\\
+        \small Estrutura Bipartida\\
         \includegraphics[width=\textwidth]{similaridade_pratos_principais.png}
         \column{0.5\textwidth}
         \centering
@@ -67,7 +79,7 @@
         \includegraphics[width=\textwidth]{projecao_pratos_principais.png}
     \end{columns}
     \vspace{0.3cm}
-    \textbf{Conclusão:} A projeção revela o "core" do menu, onde a espessura das arestas verdes confirma a alta paridade técnica entre Natal e Fortaleza.
+    \textbf{Conclusão:} Alta densidade de rede. A projeção revela o "cerne" comum de arroz cremoso e bases proteicas idênticas.
 \end{frame}
 
 \begin{frame}{Resultados: Saladas e Sobremesas}
@@ -83,16 +95,25 @@
     \end{columns}
     \vspace{0.3cm}
     \begin{itemize}
-        \item \textbf{Saladas:} Menor densidade de conexões (maior exclusividade).
-        \item \textbf{Sobremesas:} Concentração em bases de frutas e confeitaria industrializada.
+        \item \textbf{Ajuste de Limiar:} Utilizou-se $J \geq 0.30$ para estas categorias.
+        \item \textbf{Observação:} Saladas apresentam maior autoria regional e menor taxa de espelhamento técnico que os pratos principais.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Representação Algébrica e Exportação}
+    \begin{itemize}
+        \item \textbf{Matrizes de Adjacência:} Conversão do grafo para formato CSV para auditoria.
+        \item \textbf{Definição da Matriz $A$:}
+        \[ A_{ij} = \begin{cases} 1 & \text{se o prato } i \text{ contém o ingrediente } j \\ 0 & \text{caso contrário} \end{cases} \]
+        \item \textbf{Visualização Interativa:} Uso do Pyvis para exploração dinâmica da topologia da rede em ambiente HTML.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Considerações Finais}
     \begin{itemize}
-        \item A transição do grafo bipartido para a projeção monopartida permitiu uma análise mais executiva e rigorosa.
-        \item O uso do parâmetro de layout $k$ foi essencial para a legibilidade visual das categorias mais densas.
-        \item \textbf{Repositório:} \url{https://arleswasb.github.io/Projeto_ED2_P1/}
+        \item A combinação de NLP e Teoria dos Grafos automatizou a análise de similaridade gastronômica.
+        \item A projeção monopartida provou ser a ferramenta mais eficaz para síntese de resultados em cardápios extensos.
+        \item \textbf{Repositório e Webmaps:} \url{https://arleswasb.github.io/Projeto_ED2_P1/}
     \end{itemize}
 \end{frame}
 
